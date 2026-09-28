@@ -47,8 +47,11 @@ class Config:
 
     # Credenciales de Supabase
     SUPABASE_URL = os.getenv("SUPABASE_URL", "")
-    SUPABASE_KEY = os.getenv("SUPABASE_KEY", os.getenv("SUPABASE_ANON_KEY", ""))
-    SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "upds-jwt-secret-key-for-local-and-production-testing-2026")
+    SUPABASE_KEY = os.getenv("SUPABASE_KEY", os.getenv("SUPABASE_PUBLISHABLE_KEY", os.getenv("SUPABASE_ANON_KEY", "")))
+    SUPABASE_PUBLISHABLE_KEY = os.getenv("SUPABASE_PUBLISHABLE_KEY", SUPABASE_KEY)
+    SUPABASE_SECRET_KEY = os.getenv("SUPABASE_SECRET_KEY", "")
+    SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", os.getenv("SUPABASE_SECRET_KEY", "upds-jwt-secret-key-for-local-and-production-testing-2026"))
+    SUPABASE_JWKS_URL = os.getenv("SUPABASE_JWKS_URL", "")
 
     # Ciclo de vida de tokens (Buenas prácticas RFC 6749 y requerimiento docente)
     # Token de acceso corto (~15 min) para minimizar ventana de ataque ante fugas
