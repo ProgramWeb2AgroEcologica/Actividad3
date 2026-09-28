@@ -43,6 +43,36 @@ def registrar_usuario(datos):
 
     # Generación de UID seguro
     user_id = str(uuid.uuid4())
+
+    # Sincronización con Supabase Auth para que exista en auth.users si Supabase está activo
+    try:
+        from flask import current_app
+        supabase_url = current_app.config.get("SUPABASE_URL")
+        supabase_secret = current_app.config.get("SUPABASE_SECRET_KEY")
+        is_testing = current_app.config.get("TESTING", False)
+
+        if not is_testing and supabase_url and supabase_secret and "supabase.co" in supabase_url:
+            from supabase import create_client
+            client = create_client(supabase_url, supabase_secret)
+            try:
+                res = client.auth.admin.create_user({
+                    "email": email,
+                    "password": password,
+                    "email_confirm": True,
+                    "user_metadata": {"nombre": nombre}
+                })
+                if res.user:
+                    user_id = str(res.user.id)
+            except Exception:
+                # Si ya existe en Supabase Auth, recuperamos su UID existente
+                for u in client.auth.admin.list_users():
+                    if u.email.lower() == email:
+                        user_id = str(u.id)
+                        break
+    except Exception as e:
+        from flask import current_app
+        current_app.logger.warning(f"Aviso sync Supabase Auth: {e}")
+
     _usuarios_db[email] = {
         "id": user_id,
         "email": email,
