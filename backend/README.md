@@ -168,15 +168,10 @@ tests/test_api.py::test_22_ecoforia_cu04_cambio_estado_despacho_ferial PASSED [1
 
 ## 6. Despliegue en Render (Paso a Paso)
 
-1. **Subir cambios a GitHub:**
-   ```bash
-   git init
-   git add .
-   git commit -m "feat(backend): Backend completo Actividad 3 con JWT, RLS y Swagger"
-   git branch -M main
-   git remote add origin https://github.com/TU_USUARIO/TU_REPOSITORIO.git
-   git push -u origin main
-   ```
+1. **Repositorio Oficial en GitHub:**
+   - **URL:** [https://github.com/ProgramWeb2AgroEcologica/Actividad3](https://github.com/ProgramWeb2AgroEcologica/Actividad3)
+   - Rama conectada: `main`
+
 2. **Crear Servicio en Render:**
    - Iniciar sesión en [dashboard.render.com](https://dashboard.render.com).
    - Clic en **New +** -> **Web Service**.

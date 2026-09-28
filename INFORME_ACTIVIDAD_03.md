@@ -424,15 +424,13 @@ Para la defensa presencial ante el **Ing. Jimmy Requena**, el equipo estructuró
 
 ## 12. Guía de Despliegue en la Nube (Render)
 
-1. **Subida a GitHub:**
-   ```bash
-   git init
-   git add .
-   git commit -m "feat(backend): Backend completo Actividad 3 con JWT, RLS y Swagger"
-   git branch -M main
-   git remote add origin https://github.com/TU_USUARIO/TU_REPOSITORIO.git
-   git push -u origin main
-   ```
+1. **Repositorio Oficial en GitHub:**
+   - **URL del Repositorio:** [https://github.com/ProgramWeb2AgroEcologica/Actividad3](https://github.com/ProgramWeb2AgroEcologica/Actividad3)
+   - **Rama Principal:** `main`
+   - **Comando de sincronización:**
+     ```bash
+     git push origin main
+     ```
 2. **Configuración del Web Service en Render:**
    - **Root Directory:** `backend`
    - **Runtime:** `Python 3`
