@@ -396,10 +396,8 @@ CREATE POLICY productos_gestion_productor ON public.productos
 </ul>
 <h3 id="43-evidencia-de-implementacion-en-supabase">4.3. Evidencia de Implementación en Supabase</h3>
 <p>A continuación se presenta la evidencia gráfica del panel de administración de Supabase (<em>Table Editor</em>), donde se certifica que las cinco tablas de la arquitectura poseen el badge <strong>RLS ENABLED</strong>:</p>
-<figure style="text-align: center; margin: 24px 0;">
-    <img src="foots/RSL de las TablasSql.png" alt="Evidencia de Políticas RLS Activas en Supabase" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); border: 1px solid var(--border);">
-    <figcaption style="font-size: 0.88rem; color: var(--text-muted); margin-top: 10px;"><strong>Figura 4.1:</strong> Panel Table Editor de Supabase confirmando RLS habilitado (Badge verde RLS ENABLED) en las tablas <code>tareas</code>, <code>productores</code>, <code>productos</code>, <code>pedidos</code> y <code>detalle_pedidos</code>.</figcaption>
-</figure>
+<p><img alt="Evidencia de Políticas RLS Activas en Supabase" src="foots/RSL%20de%20las%20TablasSql.png" />
+<em>Figura 4.1: Panel Table Editor de Supabase confirmando RLS habilitado (Badge verde RLS ENABLED) en las tablas <code>tareas</code>, <code>productores</code>, <code>productos</code>, <code>pedidos</code> y <code>detalle_pedidos</code>.</em></p>
 <hr />
 <h2 id="5-protocolo-criptografico-jwt-y-ciclo-de-vida-de-tokens">5. Protocolo Criptográfico JWT y Ciclo de Vida de Tokens</h2>
 <h3 id="51-anatomia-y-garantia-de-integridad">5.1. Anatomía y Garantía de Integridad</h3>
@@ -748,14 +746,19 @@ La firma garantiza matemáticamente la <strong>integridad</strong>: si un atacan
 </table>
 <hr />
 <h2 id="9-matriz-de-gobernanza-y-auditoria-ai-dlc">9. Matriz de Gobernanza y Auditoría AI-DLC</h2>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Requisito Institucional de Cátedra:</strong> Conforme a las pautas oficiales de la plataforma UPDS, la matriz de IA detalla explícitamente si el copiloto inteligente sugirió configuraciones de despliegue o scripts, y el protocolo técnico mediante el cual los ingenieros humanos verificaron cada artefacto.</p>
+</blockquote>
 <table>
 <thead>
 <tr>
 <th style="text-align: center;">ID y Fase AI-DLC</th>
 <th style="text-align: left;">Planteamiento Técnico del Pod</th>
-<th style="text-align: left;">Análisis y Propuesta AI (Antigravity AI)</th>
-<th style="text-align: left;">Decisión de Gobernanza Técnica</th>
-<th style="text-align: left;">Resultado en Repositorio</th>
+<th style="text-align: left;">Sugerencia de la IA (Propuesta Técnica)</th>
+<th style="text-align: left;">¿Sugirió Script o Configuración de Despliegue?</th>
+<th style="text-align: left;">Método de Verificación y Control Humano (¿Cómo se verificó?)</th>
+<th style="text-align: left;">Decisión Técnica de Gobernanza</th>
 </tr>
 </thead>
 <tbody>
@@ -763,36 +766,49 @@ La firma garantiza matemáticamente la <strong>integridad</strong>: si un atacan
 <td style="text-align: center;"><strong>[Hito 01]<br>Arquitectura Backend</strong><br><em>Fase: Diseño</em></td>
 <td style="text-align: left;">¿Cómo evitar el antipatrón de un archivo monolítico gigante y satisfacer la consigna de modularidad de la cátedra?</td>
 <td style="text-align: left;">Se propuso el patrón Application Factory (<code>create_app</code>) con registro dinámico de Blueprints de Flask-Smorest.</td>
+<td style="text-align: left;"><strong>SÍ. Script arquitectónico:</strong><br><code>app/__init__.py</code> y <code>app/config.py</code>.</td>
+<td style="text-align: left;"><strong>Inspección de código y ejecución local:</strong> Se verificó la instanciación de <code>create_app()</code>, registro de extensiones Flask-Smorest y arranque en puerto 5000 sin dependencias circulares.</td>
 <td style="text-align: left;"><strong>Aprobado:</strong> Separación en 4 Blueprints modulares (<code>salud</code>, <code>auth</code>, <code>tareas</code>, <code>ecoforia</code>).</td>
-<td style="text-align: left;"><code>app/__init__.py</code> desacoplado y listo para tests unitarios.</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>[Hito 02]<br>Aislamiento RLS</strong><br><em>Fase: Construcción</em></td>
 <td style="text-align: left;">¿Por qué el docente enfatizó que Beto debe recibir 404 y no 403 al acceder a datos de Ana?</td>
-<td style="text-align: left;">Devolver 403 confirma la existencia del ID ajeno (fuga de metadatos BOLA). RLS filtra a nivel motor devolviendo 0 filas, por lo que el recurso legítimamente no existe para Beto.</td>
+<td style="text-align: left;">Devolver 403 confirma la existencia del ID ajeno (BOLA). Sugirió delegar el filtrado a PostgreSQL con RLS nativo.</td>
+<td style="text-align: left;"><strong>SÍ. Script de Base de Datos:</strong><br><code>sql/01_schema_rls.sql</code> (tablas <code>tareas</code>, <code>productores</code>, <code>productos</code>, <code>pedidos</code> con RLS).</td>
+<td style="text-align: left;"><strong>Ejecución y Verificación en Supabase:</strong> El estudiante ejecutó manualmente el script en el SQL Editor de Supabase y verificó el badge verde <code>RLS ENABLED</code> en Table Editor.</td>
 <td style="text-align: left;"><strong>Aprobado:</strong> Retorno estricto de <code>404 Not Found</code> en rutas de tareas y cosechas ajenas.</td>
-<td style="text-align: left;">Validado en <code>test_12</code>, <code>test_13</code> y <code>test_14</code> de Pytest.</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>[Hito 03]<br>PATCH vs. PUT</strong><br><em>Fase: Construcción</em></td>
 <td style="text-align: left;">¿Por qué no usar PUT y exigir PATCH para actualizar tareas y estados de pedidos?</td>
-<td style="text-align: left;">PUT es destructivo si el cliente no envía el objeto entero. PATCH aplica mutaciones parciales atómicas (ej. solo cambiar <code>completada: true</code> o <code>stock: 50</code>).</td>
+<td style="text-align: left;">PUT es destructivo si el cliente omite atributos. PATCH aplica mutaciones parciales atómicas (ej. solo cambiar <code>completada: true</code>).</td>
+<td style="text-align: left;"><strong>SÍ. Script de Controladores:</strong><br><code>app/tareas/routes.py</code> y <code>app/ecoforia/routes.py</code>.</td>
+<td style="text-align: left;"><strong>Pruebas de Petición HTTP:</strong> Se enviaron payloads con modificaciones parciales; se comprobó que solo los campos enviados mutaron sin sobreescribir el resto del registro.</td>
 <td style="text-align: left;"><strong>Aprobado:</strong> Adopción de <code>PATCH</code> en tareas, productos y pedidos con esquemas delta.</td>
-<td style="text-align: left;">Implementado con <code>ActualizarTareaSchema</code> y probado en <code>test_15</code>.</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>[Hito 04]<br>Ciclo de Tokens</strong><br><em>Fase: Seguridad</em></td>
-<td style="text-align: left;">¿Cómo equilibrar la seguridad con la experiencia de usuario en redes móviles del campo?</td>
-<td style="text-align: left;">Separación en dos tokens: Access Token de vida corta (15 min) y Refresh Token de vida larga (7 días) con rotación criptográfica y leeway de 10s.</td>
-<td style="text-align: left;"><strong>Aprobado:</strong> Implementación estricta de RFC 6749 en <code>jwt_utils.py</code>.</td>
-<td style="text-align: left;">Probado en <code>test_08</code> (expiración) y <code>test_09</code> (renovación).</td>
+<td style="text-align: left;">¿Cómo implementar autenticación robusta con tokens de vida corta, rotación y tolerancia a desincronizaciones de reloj?</td>
+<td style="text-align: left;">Separación en dos tokens: Access Token (15 min) y Refresh Token (7 días) con rotación, decorador con 5 validaciones y leeway de 10s.</td>
+<td style="text-align: left;"><strong>SÍ. Script criptográfico:</strong><br><code>app/auth/jwt_utils.py</code> y rutas en <code>app/auth/routes.py</code>.</td>
+<td style="text-align: left;"><strong>Prueba de Manipulación Criptográfica:</strong> Se alteró el caracter 5 de la firma de un token válido; la API rechazó con 401 (<code>"La firma del token no es válida"</code>). Se validó expiración con token vencido.</td>
+<td style="text-align: left;"><strong>Aprobado:</strong> Implementación estricta de RFC 6749 y RFC 7519.</td>
 </tr>
 <tr>
-<td style="text-align: center;"><strong>[Hito 05]<br>Trazabilidad Integral</strong><br><em>Fase: Integración</em></td>
-<td style="text-align: left;">¿Cómo articular el laboratorio de tareas con el proyecto final de la Feria Agroecológica?</td>
-<td style="text-align: left;">Se integró el modelo de 4 entidades de la Actividad 01 en <code>ecoforia_bp</code> y en el script DDL, coexistiendo con el laboratorio de tareas.</td>
-<td style="text-align: left;"><strong>Aprobado:</strong> Soporte dual: tareas para la evaluación de Ana vs. Beto y cosechas/pedidos para el MVP socioformativo.</td>
-<td style="text-align: left;">22 tests en <code>test_api.py</code> cubriendo ambos dominios.</td>
+<td style="text-align: center;"><strong>[Hito 05]<br>Calidad y Tests</strong><br><em>Fase: Verificación</em></td>
+<td style="text-align: left;">¿Cómo certificar ante el docente que la API cumple con todos los requisitos y no tiene fallas de seguridad?</td>
+<td style="text-align: left;">Sugirió una batería de 22 pruebas automatizadas en Pytest cubriendo health, login, BOLA 404, firma inválida y CU-01 a CU-04.</td>
+<td style="text-align: left;"><strong>SÍ. Script de Pruebas:</strong><br><code>tests/test_api.py</code> y configuración <code>pytest.ini</code>.</td>
+<td style="text-align: left;"><strong>Ejecución en Terminal:</strong> Se ejecutó <code>pytest -v</code> en el entorno virtual local; se verificó que las 22 pruebas pasaran en verde en 0.29s sin advertencias de deprecación.</td>
+<td style="text-align: left;"><strong>Aprobado al 100%:</strong> 22 passed en 0.29 segundos.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>[Hito 06]<br>Despliegue Nube</strong><br><em>Fase: Operación</em></td>
+<td style="text-align: left;">¿Cuál es la configuración óptima para desplegar en el nivel gratuito de Render sin incurrir en costes y de forma segura?</td>
+<td style="text-align: left;">Usar runtime Python 3 con Gunicorn WSGI, aislar el Root Directory en <code>backend</code> y usar variables de entorno para los secretos de Supabase.</td>
+<td style="text-align: left;"><strong>SÍ. Configuración de Despliegue:</strong><br>Comando Build (<code>pip install -r requirements.txt</code>), Start (<code>gunicorn "app:create_app()"</code>) y 5 env vars.</td>
+<td style="text-align: left;"><strong>Validación Local y en Nube:</strong> Se probó el arranque de Gunicorn localmente, se verificó que <code>.env</code> esté en <code>.gitignore</code> para no filtrar secretos en GitHub, y se mapearon las variables en Render.</td>
+<td style="text-align: left;"><strong>Aprobado:</strong> Despliegue operativo y costo 0 Bs garantizado.</td>
 </tr>
 </tbody>
 </table>
