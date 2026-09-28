@@ -1,0 +1,587 @@
+================================================================================
+TRANSCRIPCIÓN LITERAL COMPLETA DE LA CLASE DE PROGRAMACIÓN WEB 2
+Materia: Programación Web 2
+Fecha: 23 de septiembre
+================================================================================
+
+================================================================================
+[INICIO DEL PRIMER AUDIO: programaciónweb2_23sept1parte.m4a]
+================================================================================
+
+[00:00 - 00:08]
+(Sonido ambiente, murmullo en el aula)
+Estudiante: "Hoy día es 23 de septiembre ya..."
+
+[00:08] Docente:
+"Ya. Ya hemos estado viendo lo que son las API, API REST. Vamos a seguir trabajando con Flask, Supabase. Algunos se han quedado por ahí en el camino porque no han... no he visto una base de datos en Supabase.
+Este lunes y este largo fin de semana tienen para entretenerse, para probar, para hacer. Mi consejo es que le pidan a la IA más ejercicios y vayan probando, ¿ya? Vayan haciendo.
+Mucha base de datos... Oye, ¿este quién quién es este? Edwin... Pucha, cara de topo..."
+
+[00:48] [Risas en el aula]
+
+[00:54] Docente:
+"Ya. La idea es que construyamos nuestra API REST real, protegida y publicada en internet. Vamos a usar solamente herramientas gratuitas, ¿ya?
+La idea es que cada uno de ustedes me presente, además de su entregable para el día lunes de la actividad... creo que era la tres, ¿verdad?
+Estudiantes: Sí.
+Docente: Me van a presentar su enlace que tenga la API documentada en Swagger, donde cada usuario solo va a poder ver sus propios datos, ¿ya?
+Hoy día vamos a entender por qué esto, por qué es segura. No solamente va a ser copiar código, ¿ya?
+Como ven, vamos a trabajar con Python 3.12 para arriba, Flask 3, Flask-Smorest, Supabase, Postgres y en Render vamos a publicar, vamos a desplegar. ¿Oca?"
+
+[02:18] Docente:
+"Un tema muy importante con Render, los que todavía no lo conocen o no lo han ocupado, es que se va a chichir cada 15 minutos. Entonces ustedes mismos cuando piensan mostrar algo, antes de ir a mostrar tienen que abrirla. O busquen una forma de crear un demonio, ¿ya?, un cron que cada cierto tiempo vaya y abra, la despierte... despierte el servicio en Render.
+¿Alguno de ustedes ya ha ocupado esto?"
+Estudiante: "Sí, sí..."
+
+[03:00] Docente:
+"¿Alguna vez ustedes han visto la misma aplicación... claro, por ejemplo acá en la universidad, ¿verdad? Entran con su usuario, no ven las notas o datos de sus compañeros, solamente ven sus datos. Ahora tiene que ser lo mismo, ¿ya? Tienen que probar que no ven lo mismo que la otra persona.
+Toda esa idea es parte de lo que vamos a ver con JWT.
+En realidad son como seis bloques:
+- La idea de la URL pública.
+- La arquitectura, los Blueprints, Swagger.
+- El JWT y la autorización.
+- Cómo se manejan los refresh tokens.
+- Qué es el RLS en Postgres. ¿Alguien conoce, ya ha usado, ha escuchado del RLS?"
+Estudiante: "¿RLS?"
+Docente: "RLS."
+Estudiante: "Ah, RLS..."
+Docente: "A mí me gusta mucho Postgres porque te da tres mecanismos de autenticación: el enlace mágico, el OAuth... no, y el RLS, pero aparte del RLS otra... es muy buena. Tiene otra, no me acuerdo cuál es la otra. Pero el RLS es Row Level Security. Si uno define un rol, ese rol puede ver sus datos. Y puede ver a nivel de row, Row Level Security, a nivel no roles, sino de fila. Nivel de seguridad a nivel de fila en una tabla.
+Entonces de esa manera la base de datos filtra las filas para cada usuario, el usuario que pueda ver, no puede ver todas. Y eso es lo bueno. Me parece muy poderosa, por eso muchos están ocupando el PostgreSQL o Supabase para todo.
+Y vamos a hacer la práctica y despliegue. En Render ya creo que tiene su Supabase también directamente, para no estar usando un Supabase aparte, ¿ya?
+Pero ese es el entregable. El entregable es crear ahora la API y al final, que ya deberíamos estar cerca, es consumir estas API y presentar su proyecto final, su aplicación web sostenible.
+Al terminar este laboratorio ustedes deberían poder estructurar una API REST en Flask con Blueprints y una fábrica de aplicaciones.
+Explicar qué es JSON Web Token y verificar su firma, vencimiento, audiencia y emisor.
+Aquí yo voy a ponerles una... una tarea, ¿ya?
+Necesito que dentro de las tareas que están haciendo, para el mismo día lunes... para el mismo día lunes, sellarlo y poderlo ver..."
+
+[05:37] Docente:
+"A ver, espérenme un segundito, por favor."
+(El docente atiende una llamada telefónica):
+"Buen día, dígame, estoy en clases...
+Aló, aló, buen día...
+Hola, hola... Ahora sí. Estoy en clases, dígame, ¿qué pasó?...
+[Pausa / conversación telefónica]
+Claro que te voy a ayudar...
+Sí, de verdad...
+Sí, que disparen...
+Pero no, pero tienen que tener aquí ya funcionarios...
+Van... ¿para qué voy a ir a sacarla?
+Pero pero por eso... para eso que venga él, él tiene que venir acá...
+Allá no le van a hacer nada... el tema del... depende de las personales...
+Acá es donde se hace todo... ese es el problema...
+Si no tiene que doblar la casa de varios...
+Acá lo podemos bloquear...
+Pero lo van a meter a desarrollo...
+No, metele, metele, metele... metele...
+Que firmen...
+Hay que publicar... hay que ponerlos en producción...
+[El docente continúa la llamada mientras en el aula los estudiantes conversan en voz baja sobre la materia, Docker, la actividad 3, etc.]"
+
+[08:52] Docente:
+(Termina la llamada y retoma la clase):
+"Todo el mundo está viajando...
+Ya, les decía que me gusta Supabase porque maneja Postgres y maneja esas tres cosas: el enlace mágico, el OAuth y tiene una más que me gusta, ¿no? No me acuerdo cuál es. Hay una que... que mira, yo lo puedo eximir a aquella persona que me muestra con Supabase, obviamente, cómo manejar el tema del... del token con la autenticación con QR.
+Si se han dado cuenta, hasta aquí mismo en la universidad ya se ha implementado. Tú puedes agarrar y... y escanear un QR y por Bluetooth reconocer que este dispositivo le está autorizando a este otro dispositivo a que ingrese, porque este tiene la cuenta. Y le pide que inicie sesión en Samsung, digamos, o que autentique con la huella digital y recién lo deja entrar. Pero ahí no se ve contraseña, nada, lo único que se hace es escanear el código de la aplicación y con eso se autentica.
+Yo no he visto ninguno de mis alumnos hasta el momento que lo haya implementado, ¿ya?
+Reconocimiento del dispositivo por QR... O sea, creo que saben a qué me refiero.
+Y de verdad, el que lo hace, porque todavía no me han resuelto el problema, queda eximido y ya vemos cómo doblamos sus notas, ¿ya?"
+
+[10:14] Estudiante: "¿Para el lunes lo quiere o para ahorita eso?"
+Docente: "Para el lunes. Para ahorita van a... no pueden hablar... Ahorita les estoy pidiendo."
+Estudiante: "Ah..."
+Docente: "Ya les estoy diciendo por qué me gusta, ¿no? JSON Web Token, RLS y la seguridad.
+Ahorita les estoy dando esta tarea que tienen que ir a hacer y tiene que estar así completa:
+Tiene que haber el GET, el POST de registro, el POST de login, el POST de refresh para renovar el access token.
+De tarea les quiero pedir que por favor averigüen cuánto es el estándar mínimo para pedir un token nuevamente, porque tampoco es pedir a cada rato, autenticarse a cada rato.
+Entonces, ¿cada cuánto se tiene que solicitar una actualización del token? Si el token nos sirve para acceder, entonces ¿cada cuánto vuelvo a pedir token? ¿Cada cuánto se hace un refresh token? Renovar el access token, ¿ya?
+Y en función a eso, implementen esa buena práctica en sus proyectos, por favor, y en la tarea.
+También quiero un GET del perfil que está autorizado. Si ese perfil no está autorizado, no va a poder a ver el contenido del JSON Web Token.
+Un GET de las tareas, para listar las tareas que tengan registradas.
+Un POST para crear una nueva tarea.
+Quiero también que comprueben por el ID: el GET de la tarea, el PATCH para actualizar la tarea y el borrado de la tarea.
+Y quiero que me digan por qué no estamos usando el PUT y por qué sí el PATCH, ¿ya?
+Son tareas que estoy dando, por si acaso, me va a costar recordar, anoten. Si me vienen a preguntar y luego me acuerdo el día que califico, ya están sin esa tarea.
+GET también /docs para poder ver todo lo de Swagger, que debería estar publicado en la carpeta docs, que es de openapi.json.
+Entonces ahí va a estar publicado y tiene que estar bien descrita sus... sus endpoints. Y ahí tiene que haber el nivel de seguridad también para poder refrescar la clave o el token cada vez que se necesita para poder ejecutar cada uno de los endpoints, ¿ya? ¿Está clarito?"
+
+[12:12] Docente:
+"Hay cuatro piezas y hay tres momentos.
+Las piezas son: el cliente, el API Flask, el Supabase y bueno, el PostgreSQL, la tabla propia como las tareas.
+Y al Supabase lo estamos tomando como el tema del... autenticación, y es el que emite el token de autenticación, el JSON Web Token.
+Con ese JSON Web Token nosotros nos vamos a poder identificar y Supabase va a autenticarnos y va a validar esa contraseña. Entonces dice: toma este token, este JSON Web Token.
+Ese JSON Web Token nosotros vamos a poder entrar en el GET de autorización que veíamos en la... en la anterior. Acá donde estaba el GET /api/auth/registro, ¿no? Ahí vamos a poner ya, ¿por qué? Porque nos ha identificado. Cuando se envía nos está dando una llave. Esa llave es ese token, el Bearer JSON Web Token.
+Con eso la API verifica que somos nosotros realmente y nos va a permitir... y nos va a permitir, voy a poner el lazo.
+Entonces de nuevo: el JSON Web Token y Supabase emite con ese Supabase Authorization Web Token, que lo tenemos aquí en el POST /auth/registro, que crea el usuario autorizado; /auth/login y este recibe los tokens; /auth/refresh, /auth/perfil. Si está en auth es porque tiene autorización; si tiene autorización es porque lo está permitiendo Supabase, en auth emite el token.
+Ese token, Supabase Auth valida, nos va a permitir hacer el login en esa, POST /auth/login. Pero si no tenemos el token no vamos a poder hacer el login, por eso entrega un web token.
+Ese web token para cada petición lo vamos a poner en el Authorization, en el Bearer Web Token, y esta API va a verificar que somos nosotros y solamente así nos va a permitir hacer consulta, crear nuevos registros, muchas muchas cosas.
+Entonces ustedes tienen que ver cómo está funcionando todo es... toda esta arquitectura."
+
+[14:14] Docente:
+"API REST: recursos, verbos, códigos.
+Ya, a ver, las fuentes se me han chipado, por eso está separado, está feíto, pero se lee.
+¿Cuáles son los verbos? Cuidado va a ser pregunta de examen.
+¡Alinber! ¿Cuáles son los verbos en API REST?
+No te olvides que tienes que decir: yo hago, tú haces, él hace, nosotros hacemos... los verbos.
+¿Cuál es el verbo ahí? Tú tomas, yo tomo, él toma, todos tomamos o nos emborrachamos... ¿Cuál es el verbo?
+Está en pantalla. ¿Cuáles son los verbos?"
+Estudiante: "El POST..."
+Docente: "El POST, PATCH, DELETE... ¿Y el PUT?"
+Estudiante: "Igual."
+Docente: "Igual es verbo, ¿no ve? Tú puteas, yo puteo... ¿No ve? [Risas]. Ya. Ese es el verbo."
+
+[15:32] Docente:
+"A ver... Cuando ya tenemos un registro, allá atrás para Zamorano, cuando ya tenemos un registro en la base de datos y tratamos de meter a otro Zamorano, ¿qué error me devuelve la API?"
+Estudiante: "De que el nombre no sé, pero van a chocar..."
+Docente: "Por eso, aquí dice, mira: aquí si van a chocar, aquí abajito dice: conflicto dice, chocando. ¿Qué código había sido?"
+Estudiante: "409."
+Docente: "409, código cuando se están chocando.
+Ahora, ¿cuándo permite que se choquen nomás? ¿En qué situación se permite que se choquen nomás?
+Les he pedido... creo que en los dos cursos que estoy dando este mes les he pedido que averigüen qué es deduplicación. La palabra no 'de' separado 'duplicación', sino junto: deduplicación.
+Ahí necesitamos manejar la deduplicación cuando necesitamos tener conteo de todos los Zamoranos habidos y por haber.
+Entonces vamos a admitir que hayan duplicados, pero tenemos que saber manejar eso y con la IA que nos entregue todos los Zamoranos habidos y por haber en todo el mundo, y entonces hay que saber manejar la deduplicación ahí, ¿ya?
+Para... no es conflicto, no es un conflicto al final. Entonces sí nos va a permitir crear."
+
+[16:48] Docente:
+"¿Qué es el Blueprint? A ver, Charles, ¿qué es un Blueprint?
+Cuando digan: ¿ya pues, tienes el Blueprint de tu API? ¿Qué van a decir?
+Yara, ¿cuál es el Blueprint de tu API de tareas?
+¿Cuál es el Blueprint de tu API de tareas?
+¿Cuál es el Blueprint de tu API de tareas?
+¿Cuál es el Blueprint de tu API de...? [Risas]
+¿Cuál es? ¿Cuál es el Blueprint de tu API de tareas?
+Te la pongo más fácil: ¿De qué color eran las mangas blancas del chaleco de Napoleón?"
+[Risas en el aula]
+Estudiante: "Blanco..."
+Docente: "¿Eran blancas? Blanca con rojo...
+Aquí te estoy diciendo igual: el Blueprint de tu API de tareas, ¿cuál es?
+Igualito que de qué color es las mangas del chaleco blanco de Napoleón...
+¿Cuál es el Blueprint de la API de tareas?
+No le soples, pues, ya no sirve la pregunta del chaleco.
+Ahí está, mira, está ahí: api_tareas.
+Por eso te digo: de qué color el chaleco, las mangas, todo... porque te estoy diciendo: ¿cuál es el Blueprint de API tareas? api_tareas.
+Primero la carpeta api, luego está tareas. Es la ruta.
+Eso era, nada más. Y aquí te está diciendo el Blueprint del módulo de rutas.
+En vez de escribir toda la API en un archivo gigante, la dividimos en módulos independientes: para salud (health), para autenticación y para las tareas. ¿Y cuál había sido de tareas? api_tareas.
+Entonces cuando te digan: por favor dígame cuál es el Blueprint de su API... Depende de cuál de mis módulos: ¿quieres de tareas? api_tareas. Listo.
+Ya tienen una forma de responder y no les van a estar asustando con que qué fue el Blueprint, huella de qué, de los hermanitos Blue Brothers, qué mier..."
+
+[19:12] Docente:
+"Bien. Esta diapositiva se las dejo así a la mala porque pueden ir copiando.
+Pero vamos viendo cómo está: aquí está el definir módulo y registrarlo.
+Es lo mismo que les he dicho: se va a publicar como api_tareas, el prefijo se agrega solo.
+¿Qué está haciendo acá el bp? A ver, para sorprenderlo a Joel López: ¿qué valor se almacena en la variable bp?"
+Estudiante (Joel): "El Blueprint."
+Docente: "Eso, nada más. ¿De qué? ¿En ese caso?"
+Estudiante: "De tareas."
+Docente: "Eso, bien. ¿Qué está haciendo ese Blueprint ahorita? ¿Qué se supone que va a hacer ese Blueprint? Porque todavía no está haciendo nada."
+Estudiante: "Está registrando api_tareas."
+Docente: "Sí, usando el prefijo. ¿Y supuestamente para qué es este Blueprint? Según su descripción en el código."
+Estudiante: "Para el CRUD de tareas."
+Docente: "Muy bien. ¿Cuál es el primer endpoint para el CRUD de tareas?"
+Estudiante: "El GET."
+Docente: "Eso. El primer endpoint es el listar las tareas, el GET. Ahí estamos haciendo el primero de todo este Blueprint, el primero es el verbo GET para listar todas las tareas.
+Al otro lado dice para registrar: ahí tienes api.register_blueprint de saludo, autorización blueprint y también tareas blueprint. Pero es para registrar. Para registrar no veo ningún POST, solamente veo un GET, o sea es para tomar o llamar la tarea, ¿no ves?
+Te está mostrando aquí from app.authorization.routes import bp as auth_bp. Debe estar agarrando del otro lado la librería para el código.
+Cuatro ventajas de los Blueprints, muy bien Joel:
+- Orden
+- Reutilización
+- Prefijos automáticos
+- Escalabilidad
+¿Para qué nos ayudan los Blueprints? Para tener orden, para poder ser reutilizados y para poder generar prefijos de manera automática. El prefijo se define una sola vez, las rutas quedan cortas y claras, porque pertenecen a ese paquete si quieren o paquete de rutas de ese Blueprint.
+Escalabilidad: un nuevo módulo nuevo es una carpeta más y una línea de registro directamente.
+O sea, en menos código es escalable, reutilizable, prefija... tiene los prefijos automáticos y nos presenta un orden."
+
+[21:40] Docente:
+"A ver, la fábrica que arma la API:
+Ahí dice API Flask name, config from object, CORS...
+¿Qué era CORS? ¿Se acuerdan?
+Fernando Peña, ¿qué era CORS?
+Y está con las tareas que tienen que presentar, ya deberían tener sellado... ¿Entonces qué era, pues?
+[Pausa mientras buscan el concepto]
+Mientras buscas: en lugar de crear la aplicación como una variable global, usamos una función que la fabrica. Esto le podemos llamar patrón aplicación, Application Factory.
+Las pruebas automáticas directamente van a llamar a create_app y ahí va a ser el test_config de una configuración falsa sin tocar Supabase real, sin hacer mucho mucho show.
+Bueno, creo que no ha encontrado. ¿Alguien puede responder qué es CORS?"
+Estudiante: "Cross-Origin Resource Sharing."
+Docente: "¿Y qué es eso, Pedro?"
+Estudiante: "Intercambio de recursos de origen cruzado."
+Docente: "No está bien la traducción."
+Estudiante: "Es un mecanismo implementado de seguridad para los navegadores web."
+Docente: "¿Para qué?"
+Estudiante: "Es un mecanismo de seguridad implementado para los navegadores web."
+Docente: "¿Qué hace, Pedro?"
+Estudiante: "Da políticas del origen por inicio del servidor y solicitudes de prueba."
+Docente: "Es para que desde afuera nosotros permitamos qué puede... verlo como en un proxy o algo así. Cuando tú dices: este nada más puede invocar a mi API, no voy a responder a los demás. Solamente a estos, para controlar el mecanismo de acceso es.
+O sea, aceptas por eso desde ese frontend. Pues si no está definido en esa política, entonces no hay tu tía, no va a poder ejecutar, porque no tiene la autorización, no está dentro de los CORS. Y normalmente justamente le pones la aplicación, coma, origin y la página de tu aplicación, la URL."
+
+[24:14] Docente:
+"Bien, me da miedo que no alcancemos porque está volando la hora.
+Voy a ir a copiarles el documento antes de que termine la clase.
+Quiero bajar a hablar con el docente de... si no me va a dar su nombre...
+Ya, mientras tanto, señores, por favor, Nahuel, Zamorano, Joel López... si van a querer el solucionario, porque yo solamente les voy a dejar la guía del estudiante del laboratorio, tienen que entrar a esa suscripción que les estoy dando.
+Creo que de acá dos, tres no más me han pasado. ¿Tú tienes que me has pasado el tuyo, no? No me acuerdo ya, ahorita voy a revisar. A los que les he compartido ese recurso de Google Drive.
+Y ojo, es una suscripción de por vida. Es decir, mientras yo tenga el acceso ahí voy a ir actualizando, así como les estoy dando ahorita todo este tutorial, de otras materias y de lo que tenga y que yo revise de lo mío, ahí lo voy a convertir en un repositorio donde van a estar todos los materiales para poder repasar alguna tecnología, algún tutorial del pasado y de lo que me llegue, ¿ya?
+Perdonen que les hinche tanto, pero realmente he visto poca gente que se ha animado, al menos en este curso.
+Entonces les subiré a la plataforma. En la plataforma lo voy a poner en... ¿dónde era? Tutoriales de aprovechamiento para el estudiante.
+Ahí abajo ya tienen un montón: tienen API simulada, tienen tutorial de programación de mini tasks, la guía de NGINX, manual básico de Git, tienen laboratorio 1, laboratorio 2, problemas de MVP del contrato, guía de medición de front real que es muy importante para el tema de sostenibilidad... Y ahora les voy a subir ahorita la guía para que ustedes hagan todo este proyecto que estamos revisando en la presentación, ¿ya?"
+
+[26:35] (Murmullos en el aula entre estudiantes):
+Estudiante 1: "¿Entonces el lunes no más se presenta la actividad 3?"
+Estudiante 2: "¿Ah?"
+Estudiante 1: "¿Entonces el lunes no más se presenta la actividad 3?"
+Estudiante 2: "Parece..."
+
+[27:18] Docente:
+"Es más, sería bueno que hagan o esto o seguir en esto y hagan su proyecto socioformativo para defender para el día lunes, ¿ya?
+O sea, les puedo dar la chance de que para que la pasen mejor y solamente implementen esto y vengan a defender esto bien. Pero si al momento de implementar ustedes ven que mejor lo van llevando para su proyecto final, ganan por doble partida, ¿ya?
+Me lo muestran para el proyecto final o me lo muestran esto, pero también le van a hacer el documento.
+A ver, ahorita les voy a decir para que entren a la plataforma y van a revisar su...
+Va a llegar Edu y se va a ir ahorita... Ahí te va a llegar Edu para irse nomás, ¿no ve?
+[Risas]"
+
+[28:40] Docente:
+"Ya, a ver, fíjense por favor ahí en Aprovechamiento del Estudiante...
+Tienen Guía Laboratorio Contenedor Docker, a eso tenemos que aplicar todito la próxima semana.
+Ahí tienen todo creo en la Guía para Estudiante:
+Conceptos clave en 5 minutos, plan A: preparar Supabase. Ahí les dice que entren a Supabase, inicien sesión con su GitHub, con su repositorio que ya tienen, o bueno, con su usuario de GitHub. Crean nuevo proyecto. Algún problema tienen, en ese rato me tienen que llamar. Ahí está el código prácticamente:
+create table... está todo el script que tienen que ejecutar en el Supabase. Qué hace cada parte, ahí tienen la estructura del proyecto final para que lo puedan crear en su computadora. Está completa la guía."
+
+[30:08] Docente:
+"Y por otro lado, esta presentación que es enorme, porque son 500 páginas, 58... ya...
+También la voy a subir, pero la voy a subir en presentaciones de la materia, ¿ya?
+Sobre todo lo que es Swagger y OpenAPI.
+OpenAPI creo que hasta es medio... ¿cómo se dice? En JavaScript no es tan tan abierto, tan natural, tan nativo es la palabra, ¿ya?
+Del código a Swagger sin escribir el YAML.
+Nosotros usamos justamente Flask-Smorest porque va a recorrer la tabla relacionando cada decorador con lo que aparece en Swagger. Esas arrobas (@) son los decoradores o etiquetas, si ustedes quieren.
+Va a haber el Blueprint de argumentos y ya lo va a relacionar para que pueda tener el cuerpo esperado con ejemplos y la validación en Swagger.
+Mucho de esto se tiene que usar para las pruebas también."
+
+[31:35] Docente:
+"¿Qué curso te toca al siguiente semestre? ¡Limbert!
+A ver, a ver, a ver... Jóvenes, voy a volver a preguntar para los que me estaban atendiendo a televisión.
+¿A quién le pregunto?
+¿Nahuel? ¿Lo han escuchado a Nahuel por ahí?
+¿Para qué se usan las arrobas, Nahuel?
+¿Te doy una pista, Nahuel? Es un adornito. ¿Para qué? Un adornito.
+Te he dado una pista. ¿Para qué se usa la arroba?"
+[Silencio]
+Docente: "Cero. Fernando, ¿tú sabes?"
+Fernando: "Eh, no, la verdad no."
+Docente: "No les creo, no me están prestando atención, les está valiendo. Voy a tener que resolverles el test ahorita ahorita, y estamos listos para el lunes.
+A ver, por ahí a ver, pero me van a explicar bien lo que estamos haciendo, si no...
+Es un decorador. Los decoradores o puedes decirles etiquetas.
+Cuando les hable, entonces: ¿cuál es este decorador? No debe estar bien dicho decorador, ¿por qué no hay la documentación de ese endpoint? ¿Qué ha pasado?
+'Ah, verdad, no le he puesto arroba. Ah, sí, sí, me faltó poner el decorador.'
+Estudiante: 'Modificadores, etiquetas, decorador y... separador...'
+Docente: 'Sí, pero cuando les hablen de decorador: decorador, decorador. No etiquetas ni nada como dicen.
+Cuando ustedes ya logren meterle bien a su Swagger, esto quiero ver: API de tareas, Flask, Supabase para el lunes.
+Ahí es donde meten el Authorization Token, acá, en este botoncito, para que todos puedan entrar. Si no, no está autorizado: error, error, error, error... Todos siempre les va a dar error si no meten ahí el token de autorización.
+Entonces ustedes tienen que hacer el POST /auth/registro para crear su usuario y eso les va a devolver el token. Ese token lo tienen que colocar en ese botoncito verde, el access token, le van a dar en Authorize, porque ahí se enciende el botoncito, y los candados de todas estas APIs ya se van a abrir, ya van a poder entrar. Si no, no van a poder entrar.
+Y hacen el Try it out de cada endpoint. El Try it out de cada endpoint es ejecutarlo, probarlo."
+
+[34:10] Docente:
+"Ya llegó Mafaldo. Abran la puerta."
+Estudiante: "Está abierta."
+Docente: "Pase."
+Estudiante (recién llegado): "Buenas tardes, jóvenes."
+Docente: "¡Mafaldo!"
+Estudiante: "Buenas tardes... [Risas]"
+Docente: "No se preocupen, porque les voy a pedir a todos, si lo aprecian a Edwin y quieren que aprenda algo en la universidad, no le ayuden. Que haga solo esto, si no, cero en la tercera actividad."
+Edwin: "Está fácil eso, oye..." [Risas]
+Docente: "Me va a explicar solito. A ver, tú que eres tan bueno para ponerle pinta a todo, dime qué es un decorador. Acabamos de decir."
+Edwin: "¿Un decorador? Como dice la palabra, decorador... es para que te dé... es para que te dé bonito ya, pues."
+Docente: "Sabía que me iba a responder algo así. A veces yo muncho sus pensamientos...
+El decorador es como etiquetar tus Blueprints. ¿Y qué son los Blueprints?"
+
+[35:36] Docente:
+"HTTP no tiene memoria, cada petición llega como si fuera la primera. Así que hay que tratar de darle memoria. ¿Cómo le vas a dar memoria?
+¿Cómo se le da memoria? ¿Por qué tenemos acá el Authorization Bearer para el token?
+Para que se acuerde de quiénes somos, para que no se olvide. Porque si no, cada petición cada vez va a ser como si fuera de nuevo la primera. Para que eso quede registrado.
+Por eso el cliente tiene que demostrar quién es en cada petición. Y internamente nosotros, cuando se autentica, le pasamos a la API el token asignado para ese cliente, para que tenga memoria."
+
+[36:45] Docente:
+"El JSON Web Token tiene tres partes separadas:
+1. El encabezado (header)
+2. La carga (payload)
+3. La firma (signature)
+Todos están en Base64. Normalmente son URLs separadas por esto: encabezado . carga . firma.
+El encabezado dice con qué algoritmo se firmó: SHA-256... con qué clave.
+La carga nos dice los reclamos (claims), datos sobre el usuario: su identificador, correo, rol, cuándo expira.
+La firma se calcula con el encabezado, con la carga y una clave secreta que solo la tiene Supabase. No la comparte, no la da a nadie.
+Por favor, nunca pongan contraseñas ni datos sensibles dentro de un JSON Web Token.
+Lo que el JSON Web Token garantiza no es el secreto, sino la integridad.
+Si cambia una sola letra de la carga, ya es otra cosa, ya no es la misma. Ya es como si ese JSON Web Token o ese hash ya no sirve. Ya no le pertenece porque ya está alterado.
+Es como si estuviera buscando hacerse pasar por otro y ya no hay la seguridad del JSON Web Token.
+La firma ya no corresponde y el token se va a rechazar y no va a servir nunca, porque se metieron a hurgar adentro."
+
+[38:35] Docente:
+"¿Alguien ha trabajado alguna vez con hash, hasheado de archivos?"
+Estudiante: "Sí."
+Docente: "¿Has trabajado con hash, Fernando?"
+Fernando: "Sí."
+Docente: "Yo les recomiendo que busquen la manera de trabajar de forma gratuita, porque cuesta.
+Yo agarro, tengo tres objetos. Estos tres objetos los quiero poner a producción. En WinRAR pagado tienes la opción de hashearlo con algún algoritmo. Pongo y le digo comprimir, eso es lo que quiero hashear. Lo va a hashear y le va a poner un código como un JSON Web Token, un token.
+Ese hash en Base64 solamente lo va a poder abrir la persona que va a recibir esto. Lo va a comparar... lo va a comparar el hash si es el original, si sirve. Y si ese hash tiene mapeado todo, como el encabezado, la carga, la firma, tiene mapeado todo. Pero si algo ha sido modificado de lo que está acá adentro y lo vuelves a guardar y no has cambiado el hash, no corresponde. Es como un bit de paridad.
+Pues ya no sirve, hay que volver a hashearlo, hay que volver a encriptarlo o comprimirlo y hashearlo de nuevo, y volver a pasarlo con el nuevo hash.
+Ese hash van a volver los que van a recibir, van a agarrar, tienen la llave obviamente del hash porque por eso es pagado, van a probar y van a decir sí corresponde, los archivos que están allá adentro son los archivos que están mapeados en ese hash.
+De esa manera trabaja con el hash. Es bien fácil, como ponerle un sticker a tu paquete que estás entregando."
+
+[40:22] Docente:
+"Por si acaso, cuando llegan tarde, ya reiteradas veces y no me tiran pelota todavía en clases, yo tampoco les voy a tirar pelota. Siempre les he dicho: me corresponden, yo les correspondo. Vayan olvidándose nomás y si tienen mala nota y se tiran, se tiraron.
+Porque conmigo sí, soy bien tolerante y me gusta que todos tengan buenas notas, pero cuando ya rebasa, ya no hay dónde darle vuelta. Yo les he dicho ya: son cuatro días locos, cinco días locos hasta el miércoles. Ahora ya son tres. Y en esos tres días siguen con el mismo comportamiento, tampoco me pidan que haga milagros, sea lo que sea. Y eso va para todos los que llegan tarde. Bueno, casi para todos, específicamente para Edwin.
+Muy tarde..."
+Edwin: "Bueno, tengo motivos..."
+Docente: "No hay excepciones, no hay..."
+Edwin: "Hoy desfilan todos..."
+Docente: "No puede ser tres... ya tienes tres días locos para tratar de estar acá y terminar bien y presentar bien."
+
+[41:35] Docente:
+"Bueno, ¿qué información viaja dentro del token?
+Puede manejar:
+- El subject (sub)
+- El correo electrónico
+- El rol del usuario
+- La audiencia (aud) a la que está dirigida o para quién es ese token
+- Quién es el emisor (iss), quién ha creado ese token
+- Cuándo ha sido emitido, el iat (issued at)
+- La fecha de expiración (exp), cuándo vence ese token. Por defecto una hora después.
+Pero por buenas prácticas de lo que yo les he pedido que vayan a ver: porque el token va a expirar, pero ¿cuánto es el mínimo que debe expirar y cada cuánto tengo que buscar un refresh token para renovar ese token, para no perder la sesión y seguir siendo identificado como yo en el navegador, en la aplicación en general?
+Si ustedes lo corren van a poder hacer todas las pruebas que están viendo en esta diapositiva."
+
+[42:35] Docente:
+"Hay que hacer cinco comprobaciones antes de poder responder esto.
+Normalmente ocurre en authorization jwt_utils.py, es un programa general que la mayoría ocupa. Porque va a recibir un token, no basta, hay que verificar ese token como les decía. Y el programita PyJWT, toda la librería, justamente hace esas comprobaciones en una sola llamada con el jwt.decode:
+jwt.decode(token, clave_publica, con qué algoritmo se está trabajando, para qué audiencia va y el issuer, cuál es el usuario que lo está ocupando, ¿ya?
+Entonces lo que hace es pasar: si alguien envía basura respondemos: 'El token está mal formado'.
+En la firma, la parte más importante, se verifica con la clave pública de Supabase.
+Eso me gusta porque ya cuánto tiempo va... por lo menos 26 años, bueno digamos 24 años desde que la Universidad Americana en La Paz yo fui a una... ¿cómo se dice? La feria que hacen aquí de tecnología... Tiene un nombre...
+Pero ahí me mostraron lo que era GIS. GPS no ve ahora, pero era Sistemas de Información Geográfica, eso es GIS (Geographic Information System).
+Y también me mostraron lo que era el PKI. Y yo mucho me confundía con los indicadores que son KPIs, pero estos son PKI. Los PKI son Public Key Infrastructure.
+Cuando a ustedes les pregunten de nuevo en algún momento qué es PKI, no están hablando de los indicadores, de los KPIs; el PKI es la infraestructura de clave pública.
+Y acá en JSON Web Token también lo ocupa en la firma, porque se verifica con la clave pública. ¿Quién la tiene la clave pública? Supabase.
+Con la clave pública de Supabase se verifica que realmente ese JSON Web Token o ese token es real, es la información que está mandando. Es como funciona lo que les decía del hasheado.
+También viene la información de que si se expira o no, todavía no venció ese token.
+Cuando vence, obviamente hay que volver a iniciar sesión, ¿ya?
+Nosotros, para que no vuelva a iniciar sesión por atrás, tenemos que autenticarlo, refrescar el token, y eso es lo que les estoy pidiendo, les estoy repitiendo otra vez: cuánto es en las mejores prácticas el mínimo de tiempo que tenemos que esperar. No hay... ¿hay? ¿2 segundos? ¿Cuánto es?
+Y el token no puede ser de cualquier persona, tiene que ser de un usuario autenticado. ¿Es un usuario autenticado? Sí. Ah ya, bueno, entonces toma este token, o sea puedo refrescarle el token. ¿No es un usuario autenticado? Que se vuelva a loguear, que se autentique y cuando esté por vencer su token que me hable unos 5 minutos antes y yo le haga un refresh y siga trabajando."
+
+[45:45] Docente:
+"Y por último, el iss, ¿qué es el iss?
+Es el token que debe venir de nuestra aplicación, de nuestro proyecto.
+¿Y el leeway? ¿Quién puede adivinar qué es el leeway? 10.
+Es un margen de tolerancia de 10 segundos, porque siempre existe diferencia entre los relojes, ¿no ve? Retrasos, todo eso. Pero dentro de estos 10 segundos no hay más tolerancia que 10 segundos. Porque el reloj del servidor puede estar mal y eso también está mal, tiene que estar todo bien sincronizado, pero se tiene ese margen amplio de 10 segundos entre servidores.
+Esto no aplica para la banca; la banca son 2.000 milisegundos, 2 segundos, si no hay respuesta chao, se rechaza.
+Por favor, quiero que prueben en sus proyectos para antes del día lunes, este fin de semana:
+Ustedes quiero que autoricen con un token, quiero que borren una letrita, la última letrita de su token, de su código, y ejecuten qué... qué error les va a dar. ¿Qué código de error les debería dar? El 401: firma de token no válida.
+La API responde 401 con un mensaje claro, en español: 'La firma del token no es válida'."
+
+[47:20] Docente:
+"Esta vez está hasheando también, pero no... A ver, a ver, a ver... ¿Qué es esto?
+¿Qué es HS256? Ese es algoritmo de encriptación.
+Este no será el AES-256, que también es otro algoritmo de encriptación. Y el RS también.
+Está mostrando el secreto compartido: se firma y se verifica con el mismo secreto. Quien puede verificar también podría firmar.
+Hay proyectos antiguos en Supabase sí, con un JSON Web Token antiguo.
+La API usa sub, Supabase JWT secret, o consulta a Supabase Auth. ¿Eso qué consulta? El secreto compartido.
+Entonces en el PKI, en el Public Key Infrastructure, la clave privada solo la tiene el dueño, es Supabase. Y solamente puede verificar que el origen es de Supabase y tiene la información si se verifica con la clave pública: JWKS (JSON Web Key Set).
+Para proyectos nuevos la API descarga la clave de autenticación conocida directamente.
+Vean por favor ese HS256 como una llave que abre y cierra el mismo candado.
+El RS es como un sello oficial que solamente puede abrir una oficina, puede sellar su oficina, pero cualquiera puede comprobar que el sello es auténtico, que está garantizado. Para garantizar está el RS256."
+
+[49:15] Docente:
+"Ahí está un decorador para lo que es el token requerido (@token_required).
+¿Qué hace el decorador para el token requerido? Ahí nos dice que empaqueta la función, los argumentos...
+Esto es bien importante, ustedes ya han pasado programación, ¿no ve? ¿Por qué tiene un asterisco (*) y por qué tiene dos asteriscos (**)?
+¿Por qué lleva asterisco y doble asterisco? Ustedes dominan Python, ¿verdad?
+¿Qué es lo primero a la mente cuando ven una variable con un asterisco?"
+Estudiante: "Multiplicación..."
+Docente: "Muy bien, pero no en programación.
+¿Alguien dijo algo?"
+Estudiante: "Para seleccionar..."
+Docente: "Se ve que está apuntando a una memoria, a la memoria de la variable que es **kwargs, que son las claves, los argumentos para la clave. Y es de ahí, desde ese lugar de memoria de donde va a extraer el token.
+Como podríamos decir, un decorador envuelve una función para ejecutar código antes que ella.
+Porque el decorador también nos ayuda para documentar, y si lo estamos documentando, eso que estamos documentando podemos probar con Swagger o podemos utilizar como test en el mismo Swagger.
+Así que los decoradores nos sirven para muchas cosas. Acá nos está sirviendo también para poder envolver una función para saber que tenemos que ejecutarla antes.
+Vienen a ser como... como unos guardianes en la puerta, ¿no? Que revisa la credencial y solo si es válida deja pasar; recorre el código, extrae el token, lee el encabezado, ve la autorización y exige el formato."
+
+[51:10] Docente:
+"¿O se me está pasando la hora?
+Nos tomamos un descanso, por favor, 12:20 terminamos... digo, continuamos y terminamos.
+Revisamos lo que nos faltó.
+Vean por favor si tienen el acceso a Guía del Estudiante de Laboratorio, descárguenla, vayan revisando ese documento.
+Voy a compartir mientras tanto... ni modo si me deja el micro... la carpeta que les había dicho de recursos que estoy dando acceso al proyecto."
+
+================================================================================
+[INICIO DEL SEGUNDO AUDIO: programaciónweb2_23sept2parte.m4a]
+================================================================================
+
+[00:00 - 05:40]
+(Conversaciones de pasillo y aula durante el receso)
+- Diálogos entre estudiantes sobre materias del siguiente semestre: Tecnología Web 1, Tecnología Web 2, Diseño Web 1, Ingeniería de Software 1.
+- Comentarios sobre horarios, docentes y si los cupos están llenos o abren nuevos grupos.
+- Un estudiante comenta sobre un problema bancario/aplicación donde le cobraron 243 Bs y está buscando el reembolso con soporte técnico.
+- El docente atiende a estudiantes que se acercan para pagar 40 Bs por QR y ser agregados a la carpeta compartida de Google Drive con material y solucionarios.
+
+[05:40] Docente:
+(Retomando la clase de forma oficial):
+"Chicos, por favor, realmente es hasta el miércoles las clases. ¿Qué nos falta ver de esto según lo que tenemos en la actividad nosotros?
+Falta la cuarta actividad. Por eso quiero que estén conscientes, por eso se las voy a hacer prácticamente... en esta se las estoy haciendo, pero yo tampoco puedo darles directamente de esa manera. Voy a autenticarme acá una vez...
+Les voy a dar todo para que lo puedan armar, pero no se trata de que copien el código, sino de que aprendan. Que lo implementen, que vean de qué se trata."
+
+[08:15] Docente:
+"Jóvenes, he estado desde hace unos días haciendo lo posible para poder compartirles el acceso a esta carpeta de recursos learning. Les estoy repitiendo ahorita porque realmente muy pocas personas, aunque me ha dicho que sí Roger, Royer, ya ha dicho que ella no hay problema, Yara porque ya tiene, trabaja conmigo... Muy pocos aquí están reaccionando. ¿Ustedes también me han dicho que sí, no ve?
+Es una suscripción para que tengan acceso a todo este material y todo lo que voy a ir compartiendo con ustedes.
+Entonces ahorita los que quieren, para no perder mucho tiempo ya con esto, voy a compartirles un cachito el QR y ya pues...
+Estudiante: '¿Por nota es, inge?'
+Docente: 'Sí.'
+Estudiantes: '¿Verdad? Mentira, ¿no ve? No, mentira dijo el compañero... ¿Por 40 puntos?'
+Docente: '0.4 puntos... Ya, de una vez, chicos. Aprovechen, saquen foto y vean.'
+[Pausa mientras algunos escanean el QR]"
+
+[10:45] Docente:
+"Fíjense las fechas, ¿ya? Es bien importante:
+Lunes tienen que exponer la actividad 3.
+El examen final... está hasta el 29 la actividad 4. El examen final es el 30, es el último día.
+Por si acaso, no se van a olvidar que los exámenes para el miércoles... por ahí me olvido yo, se los estoy diciendo desde ahorita:
+No pueden cambiar botón. Entran al examen... tienen que darlo, porque si no queda anulado.
+Y tienen que ir solamente con su correo institucional, el de acá, el de la universidad. Otro correo no voy a aceptar, ¿ya? He sido flexible en la primera, fue la primera, pero esta es la ruina en la final.
+Y tienen que estar con su correo institucional para que los pueda añadir.
+Continuemos."
+
+[13:10] Docente:
+"Ya, estábamos viendo lo que son los decoradores. ¿Ya te quedó claro, Edwin, qué son los decoradores?"
+Edwin: "No."
+Docente: "Menos dos puntos, por favor, quién está apuntando.
+El token viaja en cada petición. En Swagger tú pulsas y pegas Authorization Token.
+Rápido te voy a decir: ¿Cuál es la ruta más olvidada que a veces no aparece ni documentada en una API?"
+Estudiantes tantean respuestas...
+Docente: "Health, salud, health check. La idea es esa, la health es una ruta para ver si está viva tu API, si está publicada bien, si está con salud.
+El token viaja en cada petición. Swagger agrega un Authorization Bearer por ti, Swagger ya le da la autorización, tú no tienes que estar buscando la autorización.
+En Postgres ese mismo token activa lo que es la seguridad a nivel de registro o de fila (RLS).
+Sin el token de autorización la API no sabe quién eres y la base de datos tampoco, por eso siempre te devuelve un 401. Cuando no te da un 401 estás autorizado, la API te ha identificado y Postgres te va a devolver solo tus datos porque está con el RLS, solamente tus datos."
+
+[15:15] Docente:
+"El access token es la llave maestra en realidad. Si alguien lo roba, un virus, una red Wi-Fi o cualquier error que pueda haber ocurrido en el frontend, se puede hacer pasar por ustedes. Y recuerden que la API lo valida con la firma, sin consultar una base de datos.
+No pueden desactivarlo fácilmente, tiene que pasar un tiempo, tiene que llegar a expirar.
+Por eso ustedes tienen que investigar cuánto mínimo por estándar se tiene que volver a pedir un nuevo token y cuánto debería durar ese token: ¿un día, una hora, 5 minutos?
+Todos ustedes saben que si es largo es peligroso, mucho tiempo; si es corto es molestoso, a cada rato hay que estar volviendo a loguearse.
+Tienen que siempre definir ustedes un límite inferior y un límite superior.
+La solución es separar responsabilidades en dos tokens. Eso usa Google, Microsoft y casi todas las aplicaciones móviles hoy en día. Por eso no les piden ya la contraseña cada hora aunque sus tokens venzan, automáticamente hacen un refrescamiento de tokens y les deja mantener la sesión activa.
+Y eso es lo que ustedes tienen que ver cómo implementar: dos tokens con funciones distintas, uno corto para acceder y otro largo solo para renovar."
+
+[17:40] Docente:
+"¿Dónde está implementado el /api/auth/refresh? ¿En el GET, en el POST, en el PATCH o en el DELETE?
+Se lo consigue en un GET para login. Si te logueas y te autenticas, te dan el token y ese token te habilita y le quita el candadito al resto.
+¿Cómo se logra renovar sin pedir la contraseña?
+Primero haces el login, recibes tu token y tu refresh token, el de corta duración y el de larga duración.
+Vas a usar la API durante una hora, luego envías el access token; se está venciendo tu access token, te dice error 401, tu token expiró.
+¿Qué haces? Renuevas. ¿Con qué renuevas? Con el de renovación, con el refresh token.
+Y te vuelven a dar otro token de renovación y tu nuevo token corto.
+Esto, este fin de semana tienen que probarlo en su Swagger, me tienen que capturar pantalla y me tienen que traer para que se los selle el día lunes, porque quiere decir que han trabajado el fin de semana, lo han probado."
+
+[19:25] Docente:
+"A ver, esta me la tienes que saber responder vos, Edwin. No me respondes, de verdad con mucho gusto te voy a dar un cocacho.
+¿Por qué la misma consulta va a devolver resultados distintos?
+Lo mismo, mira: SELECT * FROM tareas.
+Donde el usuario sea Ana... no, SELECT * FROM tareas te da de Ana; SELECT * FROM tareas te da de Beto. ¿Por qué te da de los dos cosas distintas?"
+Estudiante: "Por el nivel de seguridad..."
+Docente: "Por el nivel de seguridad, pero ¿a qué nivel? Row Level Security. ¿Qué es row? Una fila, un registro.
+Seguridad a nivel de registro. Y por eso cuando tú te identificas como Ana, tú eres Ana, le das SELECT * FROM tareas y te muestra solamente lo de Ana. Si te identificas como Beto, te muestra todo lo de Beto. Pero es la misma tabla, solamente que se está aplicando el nivel de seguridad a nivel de registro.
+Row Level Security es algo muy importante que lo tiene casi nativo Salesforce. Salesforce utiliza niveles de seguridad mucho más robustos: a nivel de IP, a nivel de organización, a nivel de usuario y a nivel de Row Level Security."
+
+[21:10] Docente:
+"¿Qué son las políticas aquí?
+ALTER TABLE public.tareas ENABLE ROW LEVEL SECURITY;
+¿Qué está haciendo? A la tabla tareas le está habilitando el nivel de seguridad a nivel de registros.
+CREATE POLICY tareas_select_propias ON public.tareas...
+¿Qué está haciendo esa sentencia? Joel, necesito que tú me digas: CREATE POLICY tareas_select_propias ON public.tareas FOR SELECT TO authenticated USING (auth.uid() = user_id);
+¿Qué pasa cuando yo uso auth.uid() con una 'u' más, uuid?
+Te está diciendo: para poder identificar el ID del usuario y no de la sesión puedes utilizar el uuid.
+¿Qué está haciendo aquí? Está creando una política: tareas_select_propias en la tabla tareas para todos los usuarios que están autenticados, tomando en cuenta que es el que está en esa sesión. De esa manera nos está habilitando el Row Level Security y nos está mostrando solamente la información de ese usuario autenticado.
+Y el nombre se describe, y eso es muy importante en sus sistemas: no le pongan nombres secretos con sus nombres o abreviaciones que ustedes nomás conocen, ahí están programando recontra mal. tareas_insert_propias está bien el nombre de la política, ya me describe para insertar mis propias tareas del usuario que está logueado.
+Ahora ustedes ¿qué tienen que hacer? Implementar el UPDATE y el DELETE igualito que esto, y eso me lo tienen que traer y yo se los sello el lunes."
+
+[23:30] Docente:
+"USING filtra todas las filas existentes que puedo ver o afectar.
+WITH CHECK valida las filas nuevas o modificadas antes de guardarlas, aplica al INSERT y al UPDATE. No las va a guardar si no va a validar que realmente yo sea el habilitado o el que tiene el permiso, está autenticado con Row Level Security para insertar una nueva o para actualizarla. Ahí tienen las dos diferencias: WITH CHECK y USING.
+Ustedes ya tienen los ejemplos, lo que les falta es implementar el UPDATE y el DELETE para el día lunes."
+
+[24:35] Docente:
+"Aquí está la API para consultar el nombre del usuario.
+Roger, ¿qué verbo tú crees que tengo que utilizar para consultar el nombre de usuario?"
+Estudiante: "GET."
+Docente: "Muy bien. GET.
+En esto estamos definiendo el cliente usuario, le estamos dando el token: supabase_client(SUPABASE_URL, SUPABASE_KEY).
+Un cliente por petición: nunca se comparte un cliente con sesión ni el token de un usuario, no puede filtrarse a otro.
+Nunca service_role: esa clave ignora el Row Level Security. Usamos una clave pública del usuario."
+
+[26:10] Docente:
+"Vamos a ver quién gana: Ana contra Beto. ¿Quién puede?
+- Beto lista sus tareas con GET /api/tareas: el resultado le va a ir bien.
+- Beto lee tareas de Ana: GET /api/tareas/<id_de_Ana>: no puede, 404, no hay permiso.
+- Beto edita la tarea de Ana: no puedo, 404.
+- Beto borra la tarea de Ana: no puedo, 404. No puedo borrar de Ana, puedo la mía.
+- Beto envía el user_id de Ana por tareas: no entiende, no es tu usuario.
+- Sin token: ¿qué pasa sin token en GET /api/tareas? No hay, 401.
+- Ana completa y borra su tarea: PATCH, DELETE, todo funciona bien porque Ana lo está haciendo para ella, no lo está haciendo para otro, y solamente se ve impactado o afectado en los registros de Ana."
+
+[27:40] Docente:
+"Estamos viendo dos capas de seguridad: un 401 y un 404 (o no 403).
+La primera capa es la API: verifica quién eres, tu firma, el vencimiento, la audiencia y quién ha emitido ese JSON Web Token.
+En la capa dos, ya con la base de datos, decide qué filas puedes tocar con el nivel de seguridad de Postgres, aunque el código olvide un filtro.
+¿Y por qué me da un error 404? Porque para la base de datos la fila es ajena o no existe, porque no está a tu nombre. Y así no confirmamos qué ID existe, directamente te dicen no hay."
+
+[28:40] Docente:
+"Para preparar Supabase les va a tomar 10 minutos, pero tienen que hacerlo a conciencia:
+1. Crean el proyecto en Supabase: New Project, región São Paulo (es el servidor más cercano).
+2. Desactivamos confirmación por email: Authentication -> Sign In / Providers -> Email (solo para el laboratorio y las pruebas que están haciendo ustedes).
+3. Ejecutan el SQL: tienen que correr el script 01_schema_rls.sql.
+4. Copian credenciales: Project URL y la clave anon (public), que les va a dar Supabase. Nunca el service_role.
+5. Tienen que lograr ejecutar la API en su computadora con el código de Python."
+
+[29:45] Docente:
+"Para probar lo que es el JSON Web Token y el RLS:
+1. Primero tienen que hacer la autenticación.
+2. Tienen que probar que sin token les da error 401.
+3. Tienen que probar que Ana y Beto obtuvieron su access token.
+4. Tienen que probar que con un token alterado tiene que dar una firma inválida con 401.
+5. Tienen que probar el GET /auth/perfil: muestra el email de Ana.
+6. Ana crea la tarea: 201.
+7. Beto intenta acceder a las tareas de Ana: no tiene que poder (404).
+8. Ana sigue teniendo control, Ana marca como completada una tarea: tiene que salirle 200.
+Si todo está correcto, el JWT y el RLS funcionan. Entonces ustedes hicieron un buen trabajo, chicos."
+
+[31:00] Docente:
+"Swagger / Try it out:
+El Try it out es cuando prueban todos sus endpoints y capturan esa pantalla para el lunes.
+¿Dónde publicamos el backend sin costo? En Render.
+¿Por qué no en Railway? Porque Railway es muy bueno para backend, pero tiene un costo (te da 5 dólares de crédito inicial y luego plan de pago).
+El frontend pueden ponerlo en Render, no hay problema.
+Para desplegar en Render es súper fácil:
+- Subir a GitHub: git add, git commit, git push.
+- Crear un nuevo Web Service en Render conectado a su repositorio.
+- Instancia gratis (Free), Python 3.
+- Build command: pip install -r requirements.txt.
+- Start command con gunicorn.
+- Configurar las variables de entorno: SUPABASE_URL y SUPABASE_KEY en Environment.
+- Desplegar y esperar a que el servicio esté 'Live'.
+- Abrir /docs y les va a desplegar toda la interfaz de Swagger bien documentada."
+
+[33:15] Docente:
+"Errores frecuentes:
+- 403: tienen que confirmar su correo.
+- Faltan variables de entorno: no han subido las variables a Render.
+- Ejecutan la tabla y no trae nada: tienen que poblar datos.
+- 401 en todos los endpoints: el token expiró o falta el Bearer.
+- 429: cuando van a registrar usuarios muy rápido (rate limit).
+- Render tarda en responder en el plan gratuito: esperar al menos 1 minuto en el primer arranque."
+
+[34:00] Docente:
+"¿Qué tienen que entregar para este ejercicio el día lunes?
+1. Subir a su repositorio de GitHub.
+2. Enlace público de la API desplegada en Render o en Railway.
+3. Captura de su configuración en Python del demo RLS con su URL pública.
+4. Captura de la versión de Python que están trabajando (pytest).
+5. Correr el pytest con esos decoradores: por lo menos 12 pruebas pasando.
+6. Respuesta breve de por qué Beto recibe 404 y no 403.
+Todo eso tienen que entregar el día lunes.
+Los Blueprints organizan la API, Swagger la documenta y la prueba, JWT demuestra quién eres en cada petición, el refresh token nos renueva sin pedir contraseña y el Row Level Security hace que la base de datos solo te muestre lo tuyo.
+Con esto hemos terminado. Nos podemos ir y los que están interesados pueden venir para que les vaya añadiendo a la carpeta compartida."
+================================================================================

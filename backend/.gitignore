@@ -1,0 +1,23 @@
+# Entornos virtuales
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Variables de entorno
+.env
+.env.local
+
+# Pytest / Cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs del sistema
+*.log

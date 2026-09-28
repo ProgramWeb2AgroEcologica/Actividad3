@@ -1,0 +1,21 @@
+# Dependencias y entornos
+node_modules/
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+
+# Archivos de entorno y secretos
+.env
+.env.local
+*.log
+
+# Build outputs
+dist/
+build/

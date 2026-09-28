@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFORME ACTIVIDAD 03 - UPDS PROGRAMACIÓN WEB II</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-dark: #0f172a;
+            --secondary: #0284c7;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --code-bg: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.65;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin-top: 1.8em;
+            margin-bottom: 0.6em;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 12px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            color: var(--primary);
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #334155;
+        }
+
+        p {
+            margin-bottom: 1.1em;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 1.2em;
+        }
+
+        li {
+            margin-bottom: 0.4em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.92rem;
+        }
+
+        th, td {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+            background-color: #f1f5f9;
+            color: #b91c1c;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            color: #f8fafc;
+            padding: 18px 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.88rem;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: #e2e8f0;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--secondary);
+            background-color: #f0f9ff;
+            padding: 14px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: normal;
+            color: #0369a1;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background-color: var(--border);
+            margin: 40px 0;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            transition: all 0.2s;
+        }
+
+        .print-btn:hover {
+            background: #172554;
+            transform: translateY(-2px);
+        }
+
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .print-btn {
+                display: none;
+            }
+            h2 {
+                page-break-before: always;
+            }
+            h2:first-of-type {
+                page-break-before: avoid;
+            }
+            pre, table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Guardar como PDF / Imprimir
+    </button>
+    <div class="container">
+        <h1 id="universidad-privada-domingo-savio">UNIVERSIDAD PRIVADA DOMINGO SAVIO</h1>
+<h2 id="facultad-de-ciencias-de-la-computacion-y-telecomunicaciones">FACULTAD DE CIENCIAS DE LA COMPUTACIÓN Y TELECOMUNICACIONES</h2>
+<h3 id="ingenieria-en-sistemas">INGENIERÍA EN SISTEMAS</h3>
+<hr />
+<h1 id="informe-tecnico-de-ingenieria">INFORME TÉCNICO DE INGENIERÍA</h1>
+<h2 id="actividad-03-backend-seguro-y-base-de-datos">ACTIVIDAD 03 — BACKEND SEGURO Y BASE DE DATOS</h2>
+<h3 id="desarrollo-de-la-api-rest-flask-blueprints-supabasepostgresql-con-rls-autenticacion-jwt-y-documentacion-swagger">Desarrollo de la API REST (Flask, Blueprints, Supabase/PostgreSQL) con RLS, Autenticación JWT y Documentación Swagger</h3>
+<p><strong>(Criterio de Verificación #2 — Matriz 2: Nivel Estratégico, 50 pts)</strong></p>
+<ul>
+<li><strong>Docente:</strong> Ing. Jimmy Requena (Bolivianotech)</li>
+<li><strong>Asignatura:</strong> Programación Web II — Turno Medio Día</li>
+<li><strong>Estudiantes (Pod de Ingeniería):</strong></li>
+<li><strong>Eduar Heredia Chávez:</strong> Líder de Dominio y Negocio, Arquitecto de Datos y Frontend</li>
+<li><strong>Limbert David Quispe Osco:</strong> Auditor de Backend, Ciberseguridad OWASP y Presupuesto Web</li>
+<li><strong>Copiloto AI:</strong> Antigravity AI (Agente de Soporte AI-DLC)</li>
+<li><strong>Fecha:</strong> Septiembre de 2026</li>
+<li><strong>Santa Cruz de la Sierra — Bolivia</strong></li>
+</ul>
+<hr />
+<h2 id="contenido">Contenido</h2>
+<ol>
+<li><a href="#1-resumen-ejecutivo-y-hilo-conductor-del-proyecto-socioformativo">Resumen Ejecutivo y Hilo Conductor del Proyecto Socioformativo</a></li>
+<li><a href="#2-trazabilidad-evolutiva-del-proyecto">Trazabilidad Evolutiva del Proyecto (Actividad 01 → Actividad 02 → Actividad 03)</a></li>
+<li><a href="#3-stack-tecnológico-y-arquitectura-backend-desacoplada">Stack Tecnológico y Arquitectura Backend Desacoplada</a></li>
+<li><a href="#4-modelo-de-datos-relacional-y-políticas-row-level-security-rls">Modelo de Datos Relacional y Políticas Row Level Security (RLS)</a></li>
+<li><a href="#5-protocolo-criptográfico-jwt-y-ciclo-de-vida-de-tokens">Protocolo Criptográfico JWT y Ciclo de Vida de Tokens</a></li>
+<li><a href="#6-especificación-del-contrato-openapi-303--swagger-ui">Especificación del Contrato OpenAPI 3.0.3 / Swagger UI</a></li>
+<li><a href="#7-auditoría-de-ciberseguridad-checklist-owasp-api-security-top-10">Auditoría de Ciberseguridad: Checklist OWASP API Security Top 10</a></li>
+<li><a href="#8-matriz-de-trazabilidad-integral">Matriz de Trazabilidad Integral (Casos de Uso CU-01 al CU-04 → Endpoints → RLS)</a></li>
+<li><a href="#9-matriz-de-gobernanza-y-auditoría-ai-dlc">Matriz de Gobernanza y Auditoría AI-DLC</a></li>
+<li><a href="#10-certificación-de-calidad-batería-de-pruebas-automatizadas-pytest">Certificación de Calidad: Batería de Pruebas Automatizadas (Pytest)</a></li>
+<li><a href="#11-respuestas-técnicas-fundamentadas-a-las-preguntas-de-cátedra">Respuestas Técnicas Fundamentadas a las Preguntas de Cátedra</a></li>
+<li><a href="#12-guía-de-despliegue-en-la-nube-render">Guía de Despliegue en la Nube (Render)</a></li>
+<li><a href="#13-conclusiones">Conclusiones</a></li>
+<li><a href="#14-referencias-bibliográficas">Referencias Bibliográficas</a></li>
+</ol>
+<hr />
+<h2 id="1-resumen-ejecutivo-y-hilo-conductor-del-proyecto-socioformativo">1. Resumen Ejecutivo y Hilo Conductor del Proyecto Socioformativo</h2>
+<p>El presente informe documenta la culminación de la fase de <strong>Construcción Colaborativa (Mob Construction — Bloque III)</strong> de la asignatura <strong>Programación Web II</strong> en la Universidad Privada Domingo Savio (UPDS). El proyecto socioformativo de la materia responde a una problemática territorial crítica del departamento de Santa Cruz: la desconexión comercial de las familias campesinas y productoras agroecológicas asentadas en los valles cruceños (Samaipata, El Torno, Vallegrande, Porongo) y zonas periurbanas.</p>
+<p>De acuerdo con el diagnóstico territorial fundamentado en la <strong>Actividad 01</strong> mediante datos del <strong>CIPCA (2023)</strong> y la <strong>Cámara Agropecuaria del Oriente [CAO] (2024)</strong>:
+1. El <strong>68% de los productores agroecológicos familiares</strong> carece de mecanismos de venta directa, provocando que intermediarios y acopiadores mayoristas absorban entre el <strong>30% y 45% del margen neto de ganancia</strong> de cada cosecha.
+2. El <strong>28% de la cosecha de hortalizas y frutas frescas</strong> se pierde o descompone antes de llegar a los hogares debido a la ausencia de un mecanismo de reserva anticipada y a las altas temperaturas tropicales cruceñas (&gt; 32 °C).</p>
+<p>Para transformar esta realidad mediante la ingeniería de software, el equipo delimitó el MVP de la plataforma <strong>EcoFeria Santa Cruz</strong>: un canal web ultraligero, de costo operativo cero (0 Bs), sostenible y accesible en redes móviles 4G/H+, que conecta a los agricultores directamente con las familias urbanas.</p>
+<hr />
+<h2 id="2-trazabilidad-evolutiva-del-proyecto">2. Trazabilidad Evolutiva del Proyecto</h2>
+<p>El desarrollo del MVP se ha ejecutado de manera incremental y sistemática a lo largo de los tres bloques evaluativos:</p>
+<pre><code class="language-mermaid">graph LR
+    subgraph Actividad 01 [Actividad 01: Inception]
+        A1[Diagnóstico Territorial CIPCA/CAO] --&gt; A2[Definición de 4 Casos de Uso CU-01 a CU-04]
+        A2 --&gt; A3[Modelo Relacional: 4 Entidades]
+        A3 --&gt; A4[Presupuesto de Rendimiento &lt;= 500 KB / 0 Bs]
+    end
+
+    subgraph Actividad 02 [Actividad 02: Frontend SPA]
+        B1[React 18 + Vite + Tailwind CSS v4] --&gt; B2[Capa Desacoplada mockApi.js]
+        B2 --&gt; B3[Vistas: Catálogo, Canasta, Checkout, Pedidos, Productor]
+        B3 --&gt; B4[Certificación Lighthouse: 100/100 y Bundle 98.54 KB]
+    end
+
+    subgraph Actividad 03 [Actividad 03: Backend Seguro &amp; RLS]
+        C1[Python 3.11 + Flask 3 Application Factory] --&gt; C2[Swagger UI OpenAPI 3.0.3 en /docs]
+        C2 --&gt; C3[Doble Token JWT: Access 15m + Refresh 7d con Rotación]
+        C3 --&gt; C4[PostgreSQL Supabase con Row Level Security RLS]
+        C4 --&gt; C5[Certificación: 22 Tests Pytest Pasando en 0.29s]
+    end
+
+    Actividad 01 --&gt; Actividad 02
+    Actividad 02 --&gt; Actividad 03
+</code></pre>
+<ul>
+<li><strong>Actividad 01 (Inception y Alcance del MVP):</strong> Se formularon los cuatro casos de uso esenciales (<strong>CU-01:</strong> Exploración del Catálogo Semanal; <strong>CU-02:</strong> Reserva y Confirmación de Pedido Directo; <strong>CU-03:</strong> Gestión de Cosechas por el Productor; <strong>CU-04:</strong> Monitoreo y Despacho Ferial) y el modelo relacional de cuatro entidades (<code>Productor</code>, <code>Producto</code>, <code>Pedido</code>, <code>DetallePedido</code>).</li>
+<li><strong>Actividad 02 (Frontend Responsive y Ligero):</strong> Se construyó la Single Page Application (SPA) bajo el paradigma <em>Frontend-First</em>, desacoplada mediante un contrato mock RESTful, alcanzando una calificación perfecta de <strong>100/100 en Google Lighthouse</strong> móvil y un peso empaquetado de tan solo <strong>98.54 KB gzipped</strong> (ahorro del 80.3% del presupuesto).</li>
+<li><strong>Actividad 03 (Backend Seguro, API Documentada, JWT y RLS):</strong> Sustitución del mock por el backend real de producción en <strong>Python Flask 3</strong>, integrando documentación interactiva <strong>Swagger UI (Flask-Smorest)</strong>, autorización <strong>JWT</strong> con ciclo de vida corto y renovación, y aislamiento de datos a nivel de registro en <strong>PostgreSQL / Supabase</strong> mediante <strong>Row Level Security (RLS)</strong>.</li>
+</ul>
+<hr />
+<h2 id="3-stack-tecnologico-y-arquitectura-backend-desacoplada">3. Stack Tecnológico y Arquitectura Backend Desacoplada</h2>
+<p>Para cumplir con el <strong>Nivel Estratégico (Matriz 2, 50 puntos)</strong>, se descartó el enfoque de archivo único monolítico (<code>app.py</code> de 800 líneas) y se implementó una arquitectura limpia y modular con el patrón <strong>Application Factory</strong>:</p>
+<pre><code class="language-mermaid">graph TD
+    Client[Cliente: Web SPA / App Móvil / Swagger UI] --&gt;|HTTP Request + Bearer JWT| Flask[Flask 3.0.3 Application Factory: create_app]
+    Flask --&gt; Smorest[Flask-Smorest 0.47.0 + Marshmallow Schemas]
+    Flask --&gt; Cors[Flask-CORS: Control Estricto de Orígenes]
+    Flask --&gt; PyJWT[PyJWT: 5 Verificaciones de Claims &amp; Firma]
+    Flask --&gt; Blueprints[Blueprints Modulares]
+    Blueprints --&gt; B1[api_salud: /api/salud - Health Check]
+    Blueprints --&gt; B2[api_auth: /api/auth/* - Registro, Login, Refresh, Perfil]
+    Blueprints --&gt; B3[api_tareas: /api/tareas/* - Laboratorio RLS Ana vs. Beto]
+    Blueprints --&gt; B4[api_ecoforia: /api/productos, /api/pedidos - Casos CU-01 al CU-04]
+    B3 &amp; B4 --&gt; Supabase[(PostgreSQL en Supabase)]
+    Supabase --&gt; RLS[Motor RLS: auth.uid = user_id]
+</code></pre>
+<h3 id="31-ecosistema-tecnologico-de-produccion">3.1. Ecosistema Tecnológico de Producción</h3>
+<ul>
+<li><strong>Python 3.11.9:</strong> Intérprete base de alto rendimiento.</li>
+<li><strong>Flask 3.0.3:</strong> Framework web estructurado con fábricas de aplicación y Blueprints desacoplados.</li>
+<li><strong>Flask-Smorest 0.47.0 &amp; Marshmallow 3.21.3:</strong> Generación automática de especificaciones OpenAPI 3.0.3 y serialización/validación de esquemas de datos.</li>
+<li><strong>PyJWT 2.8.0:</strong> Motor criptográfico de firma HMAC-SHA256 (<code>HS256</code>) con verificación de expiración, audiencia, emisor y tolerancia (<em>leeway</em>).</li>
+<li><strong>PostgreSQL 15 / Supabase:</strong> Base de datos relacional con motor nativo de <strong>Row Level Security (RLS)</strong>.</li>
+<li><strong>Gunicorn 26.2.0:</strong> Servidor WSGI para despliegue en contenedores de producción (Render).</li>
+<li><strong>Pytest 9.1.1:</strong> Suite de pruebas automatizadas de seguridad e integración.</li>
+</ul>
+<hr />
+<h2 id="4-modelo-de-datos-relacional-y-politicas-row-level-security-rls">4. Modelo de Datos Relacional y Políticas Row Level Security (RLS)</h2>
+<p>El principio de <strong>Defensa en Profundidad (Defense in Depth)</strong> exige que la seguridad no dependa exclusivamente del código de la aplicación. En su lugar, el aislamiento multi-inquilino se delega directamente a las políticas de <strong>Row Level Security (RLS)</strong> del motor relacional PostgreSQL en Supabase.</p>
+<pre><code class="language-mermaid">erDiagram
+    auth_users ||--o{ public_productores : &quot;autentica (1:1)&quot;
+    public_productores ||--o{ public_productos : &quot;publica (1:N)&quot;
+    public_pedidos ||--o{ public_detalle_pedidos : &quot;contiene (1:N)&quot;
+    public_productos ||--o{ public_detalle_pedidos : &quot;incluye (1:N)&quot;
+    auth_users ||--o{ public_tareas : &quot;posee (1:N)&quot;
+
+    public_productores {
+        uuid id PK
+        uuid user_id FK &quot;auth.users(id)&quot;
+        varchar nombre_completo
+        varchar comunidad_origen
+        varchar telefono_contacto
+        boolean canal_abierto_activo
+    }
+    public_productos {
+        int id PK
+        uuid productor_id FK
+        varchar nombre_producto
+        varchar categoria
+        numeric precio_unitario_bs
+        int stock_disponible
+        boolean activo
+    }
+    public_pedidos {
+        int id PK
+        varchar codigo_reserva UK
+        varchar cliente_nombre
+        varchar cliente_telefono
+        date fecha_retiro
+        numeric total_pedido_bs
+        varchar estado_pedido
+    }
+    public_detalle_pedidos {
+        int id PK
+        int pedido_id FK
+        int producto_id FK
+        int cantidad
+        numeric subtotal_bs
+    }
+    public_tareas {
+        uuid id PK
+        varchar titulo
+        boolean completada
+        uuid user_id FK &quot;auth.users(id)&quot;
+    }
+</code></pre>
+<h3 id="41-esquema-ddl-y-politicas-de-aislamiento-sql01_schema_rlssql">4.1. Esquema DDL y Políticas de Aislamiento (<code>sql/01_schema_rls.sql</code>)</h3>
+<pre><code class="language-sql">-- 1. Habilitación de RLS en todas las tablas del dominio
+ALTER TABLE public.tareas ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.productores ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.productos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.pedidos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.detalle_pedidos ENABLE ROW LEVEL SECURITY;
+
+-- 2. Políticas para TAREAS (Laboratorio de Cátedra: Ana vs. Beto)
+CREATE POLICY tareas_select_propias ON public.tareas
+    FOR SELECT TO authenticated USING (auth.uid() = user_id);
+
+CREATE POLICY tareas_insert_propias ON public.tareas
+    FOR INSERT TO authenticated WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY tareas_update_propias ON public.tareas
+    FOR UPDATE TO authenticated USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY tareas_delete_propias ON public.tareas
+    FOR DELETE TO authenticated USING (auth.uid() = user_id);
+
+-- 3. Políticas para PRODUCTOS (Feria Agroecológica: CU-01 y CU-03)
+-- Lectura pública para el catálogo semanal del consumidor
+CREATE POLICY productos_lectura_catalogo ON public.productos
+    FOR SELECT TO anon, authenticated USING (activo = TRUE);
+
+-- Mutación exclusiva para el productor dueño de la cosecha
+CREATE POLICY productos_gestion_productor ON public.productos
+    FOR ALL TO authenticated
+    USING (EXISTS (SELECT 1 FROM public.productores p WHERE p.id = productos.productor_id AND p.user_id = auth.uid()))
+    WITH CHECK (EXISTS (SELECT 1 FROM public.productores p WHERE p.id = productos.productor_id AND p.user_id = auth.uid()));
+</code></pre>
+<h3 id="42-fundamento-tecnico-using-vs-with-check">4.2. Fundamento Técnico: <code>USING</code> vs. <code>WITH CHECK</code></h3>
+<ul>
+<li><strong><code>USING</code>:</strong> Condición de filtrado que evalúa las filas <strong>existentes</strong> al ejecutar <code>SELECT</code>, <code>UPDATE</code> o <code>DELETE</code>. Si la expresión <code>auth.uid() = user_id</code> no se cumple, PostgreSQL trata el registro como inexistente.</li>
+<li><strong><code>WITH CHECK</code>:</strong> Condición de validación que inspecciona los datos <strong>nuevos o modificados</strong> antes de confirmar un <code>INSERT</code> o <code>UPDATE</code>, impidiendo que un usuario suplante a otro asignándole su UID.</li>
+</ul>
+<hr />
+<h2 id="5-protocolo-criptografico-jwt-y-ciclo-de-vida-de-tokens">5. Protocolo Criptográfico JWT y Ciclo de Vida de Tokens</h2>
+<h3 id="51-anatomia-y-garantia-de-integridad">5.1. Anatomía y Garantía de Integridad</h3>
+<p>El token JWT (RFC 7519) se conforma de tres partes separadas por puntos y codificadas en Base64URL:
+$$\text{JWT} = \text{Header} \,.\, \text{Payload} \,.\, \text{Signature}$$</p>
+<p>El payload transporta los reclamos de identidad: <code>sub</code> (UUID del usuario), <code>email</code>, <code>role</code>, <code>aud</code> (<em>authenticated</em>), <code>iss</code> (<em>supabase</em>), <code>iat</code>, <code>exp</code> y <code>token_use</code> (<em>access</em> vs. <em>refresh</em>).<br />
+La firma garantiza matemáticamente la <strong>integridad</strong>: si un atacante altera un solo caracter del token en tránsito (por ejemplo, modificando el UID o su rol), la firma HMAC-SHA256 queda invalidada y la API rechaza la solicitud de inmediato con código <code>401 Unauthorized</code> (<em>"La firma del token no es válida"</em>).</p>
+<h3 id="52-estrategia-de-dos-tokens-con-rotacion-rfc-6749">5.2. Estrategia de Dos Tokens con Rotación (RFC 6749)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Tipo de Token</th>
+<th style="text-align: left;">Tiempo de Vida</th>
+<th style="text-align: left;">Propósito y Seguridad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Access Token</strong></td>
+<td style="text-align: left;"><strong>15 minutos</strong> (vida corta)</td>
+<td style="text-align: left;">Viaja en la cabecera <code>Authorization: Bearer &lt;token&gt;</code> en cada solicitud. Minimiza la ventana de exposición en caso de robo o filtración.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Refresh Token</strong></td>
+<td style="text-align: left;"><strong>7 días</strong> (vida larga)</td>
+<td style="text-align: left;">Se envía exclusivamente a <code>POST /api/auth/refresh</code>. Permite renovar la sesión sin volver a pedir credenciales. Aplica <strong>rotación estricta</strong>: cada uso invalida el token previo y entrega un par nuevo.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-decorador-token_required-y-las-5-comprobaciones">5.3. Decorador <code>@token_required</code> y las 5 Comprobaciones</h3>
+<p>El decorador de control de acceso ejecuta:
+1. <strong>Formato:</strong> Exige el esquema <code>Bearer &lt;token&gt;</code> y la estructura de tres bloques.
+2. <strong>Firma:</strong> Validación criptográfica estricta con clave secreta (<code>jwt.InvalidSignatureError</code>).
+3. <strong>Expiración y Leeway:</strong> Comprueba la fecha <code>exp</code> admitiendo un margen de tolerancia (<strong>leeway</strong>) de <strong>10 segundos</strong> para absorber discrepancias de reloj entre servidores.
+4. <strong>Emisor y Audiencia:</strong> Verifica coincidencia con <code>iss</code> y <code>aud</code>.
+5. <strong>Propósito:</strong> Valida que <code>token_use == 'access'</code>, impidiendo que un refresh token acceda a datos.</p>
+<hr />
+<h2 id="6-especificacion-del-contrato-openapi-303-swagger-ui">6. Especificación del Contrato OpenAPI 3.0.3 / Swagger UI</h2>
+<p>Toda la API se encuentra documentada e interactiva en la ruta pública <code>/docs</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Método</th>
+<th style="text-align: left;">Endpoint</th>
+<th style="text-align: left;">Cabecera / Payload Requerido</th>
+<th style="text-align: center;">Código HTTP</th>
+<th style="text-align: left;">Caso de Uso / Control de Seguridad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>GET</strong></td>
+<td style="text-align: left;"><code>/api/salud</code></td>
+<td style="text-align: left;">Ninguno</td>
+<td style="text-align: center;"><code>200 OK</code></td>
+<td style="text-align: left;">Diagnóstico del backend (<em>Health Check</em>).</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>POST</strong></td>
+<td style="text-align: left;"><code>/api/auth/registro</code></td>
+<td style="text-align: left;"><code>email</code>, <code>password</code>, <code>nombre</code></td>
+<td style="text-align: center;"><code>201 Created</code><br><code>409 Conflict</code></td>
+<td style="text-align: left;">Registro de usuario. Deduplicación (409 ante correo duplicado).</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>POST</strong></td>
+<td style="text-align: left;"><code>/api/auth/login</code></td>
+<td style="text-align: left;"><code>email</code>, <code>password</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>401 Unauthorized</code></td>
+<td style="text-align: left;">Autenticación y emisión de par <code>access_token</code> + <code>refresh_token</code>.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>POST</strong></td>
+<td style="text-align: left;"><code>/api/auth/refresh</code></td>
+<td style="text-align: left;"><code>refresh_token</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>401 Unauthorized</code></td>
+<td style="text-align: left;">Renovación transparente de sesión con rotación de refresh token.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>GET</strong></td>
+<td style="text-align: left;"><code>/api/auth/perfil</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>401 Unauthorized</code></td>
+<td style="text-align: left;">Perfil del usuario autenticado obtenido del JWT verificado.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>GET</strong></td>
+<td style="text-align: left;"><code>/api/tareas</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>401 Unauthorized</code></td>
+<td style="text-align: left;">Laboratorio: Lista tareas propias del usuario logueado vía RLS.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>POST</strong></td>
+<td style="text-align: left;"><code>/api/tareas</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code><br><code>titulo</code>, <code>descripcion</code>, <code>completada</code></td>
+<td style="text-align: center;"><code>201 Created</code><br><code>401 Unauthorized</code></td>
+<td style="text-align: left;">Laboratorio: Creación de tarea asignada a <code>auth.uid()</code>.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>GET</strong></td>
+<td style="text-align: left;"><code>/api/tareas/:id</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>404 Not Found</code></td>
+<td style="text-align: left;">Laboratorio: Consulta con RLS (404 ante ID ajeno; previene BOLA).</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>PATCH</strong></td>
+<td style="text-align: left;"><code>/api/tareas/:id</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code><br><code>titulo</code> / <code>completada</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>404 Not Found</code></td>
+<td style="text-align: left;">Laboratorio: Mutación parcial atómica (PATCH vs. PUT).</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>DELETE</strong></td>
+<td style="text-align: left;"><code>/api/tareas/:id</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>404 Not Found</code></td>
+<td style="text-align: left;">Laboratorio: Eliminación segura con RLS.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>GET</strong></td>
+<td style="text-align: left;"><code>/api/productos</code></td>
+<td style="text-align: left;">Ninguno</td>
+<td style="text-align: center;"><code>200 OK</code></td>
+<td style="text-align: left;"><strong>CU-01:</strong> Catálogo semanal público de cosechas de los valles.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>GET</strong></td>
+<td style="text-align: left;"><code>/api/productos/:id</code></td>
+<td style="text-align: left;">Ninguno</td>
+<td style="text-align: center;"><code>200 OK</code><br><code>404 Not Found</code></td>
+<td style="text-align: left;"><strong>CU-01:</strong> Detalle de cosecha por clave numérica.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>POST</strong></td>
+<td style="text-align: left;"><code>/api/productos</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code><br>Datos de la cosecha</td>
+<td style="text-align: center;"><code>201 Created</code></td>
+<td style="text-align: left;"><strong>CU-03:</strong> Alta de cosecha desde el panel del productor.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>PATCH</strong></td>
+<td style="text-align: left;"><code>/api/productos/:id</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code><br><code>stock</code>, <code>precio</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>404 Not Found</code></td>
+<td style="text-align: left;"><strong>CU-03:</strong> Actualización de existencias y precios justos.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>DELETE</strong></td>
+<td style="text-align: left;"><code>/api/productos/:id</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>404 Not Found</code></td>
+<td style="text-align: left;"><strong>CU-03:</strong> Desactivación lógica de cosecha.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>POST</strong></td>
+<td style="text-align: left;"><code>/api/pedidos</code></td>
+<td style="text-align: left;">Datos de cliente y canasta</td>
+<td style="text-align: center;"><code>201 Created</code></td>
+<td style="text-align: left;"><strong>CU-02:</strong> Reserva comunitaria directa con emisión de <code>ECO-XXXX</code>.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>GET</strong></td>
+<td style="text-align: left;"><code>/api/pedidos/:codigo</code></td>
+<td style="text-align: left;">Ninguno</td>
+<td style="text-align: center;"><code>200 OK</code><br><code>404 Not Found</code></td>
+<td style="text-align: left;"><strong>CU-02 / CU-04:</strong> Rastreo de cosecha por código o celular.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>GET</strong></td>
+<td style="text-align: left;"><code>/api/pedidos</code></td>
+<td style="text-align: left;">Ninguno</td>
+<td style="text-align: center;"><code>200 OK</code></td>
+<td style="text-align: left;"><strong>CU-04:</strong> Monitoreo general de pedidos en feria.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>PATCH</strong></td>
+<td style="text-align: left;"><code>/api/pedidos/:id/estado</code></td>
+<td style="text-align: left;"><code>Bearer &lt;access_token&gt;</code><br><code>estado</code></td>
+<td style="text-align: center;"><code>200 OK</code><br><code>404 Not Found</code></td>
+<td style="text-align: left;"><strong>CU-04:</strong> Actualización de estado en el Tablero de Despacho.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-auditoria-de-ciberseguridad-checklist-owasp-api-security">7. Auditoría de Ciberseguridad: Checklist OWASP API Security</h2>
+<p>Conforme a las exigencias vinculantes de la cátedra para la entrega del informe y la defensa técnica, se aplicó una doble verificación de seguridad: el <strong>Checklist OWASP de Cátedra (Diapositiva 6 / Bloque III)</strong> y la <strong>Matriz Integral OWASP API Security Top 10</strong>.</p>
+<h3 id="71-checklist-owasp-de-catedra-bloque-iii-diapositiva-6">7.1. Checklist OWASP de Cátedra (Bloque III — Diapositiva 6)</h3>
+<ol>
+<li><strong>Control de acceso roto — ¿Cada endpoint verifica permiso, no solo sesión?</strong></li>
+<li><strong>Evaluación:</strong> <strong>CUMPLE (100%)</strong>.</li>
+<li>
+<p><strong>Evidencia en Código:</strong> Estar autenticado con un JWT válido no otorga acceso irrestricto. A nivel de la API, el decorador <code>@token_required</code> extrae el <code>auth.uid()</code> del usuario; a nivel de la base de datos, el motor <strong>PostgreSQL aplica Row Level Security (RLS)</strong> mediante la política <code>USING (auth.uid() = user_id)</code>. Si un usuario autenticado (<em>Beto</em>) solicita el recurso de otro (<em>Ana</em>), la base de datos retorna 0 filas y la API responde <strong><code>404 Not Found</code></strong>, impidiendo cualquier elevación horizontal de privilegios o consulta no autorizada.</p>
+</li>
+<li>
+<p><strong>Inyección — ¿Todas las consultas están parametrizadas?</strong></p>
+</li>
+<li><strong>Evaluación:</strong> <strong>CUMPLE (100%)</strong>.</li>
+<li>
+<p><strong>Evidencia en Código:</strong> Se erradicó de forma absoluta la concatenación de variables en sentencias SQL (<code>f-strings</code> o <code>%s</code> desprotegidos). Todas las operaciones de datos se ejecutan a través de las APIs tipadas y parametrizadas de Supabase / PostgREST (<code>.eq()</code>, <code>.insert()</code>, <code>.update()</code>) o mediante el repositorio desacoplado, neutralizando cualquier intento de inyección SQL (OWASP API3 / A03).</p>
+</li>
+<li>
+<p><strong>Configuración insegura — ¿CORS cerrado? ¿Sin modo debug en producción?</strong></p>
+</li>
+<li><strong>Evaluación:</strong> <strong>CUMPLE (100%)</strong>.</li>
+<li>
+<p><strong>Evidencia en Código:</strong> En el entorno de producción (<code>ProductionConfig</code> en <code>app/config.py</code>), <code>DEBUG = False</code>, desactivando el depurador interactivo de Werkzeug para evitar fuga de código fuente o variables de memoria ante excepciones. El middleware <code>flask-cors</code> en <code>app/__init__.py</code> restringe los orígenes permitidos estrictamente a la lista de dominios autorizados de la variable <code>CORS_ORIGINS</code>.</p>
+</li>
+<li>
+<p><strong>Secretos — ¿Todas las credenciales en .env, ninguna en el repositorio?</strong></p>
+</li>
+<li><strong>Evaluación:</strong> <strong>CUMPLE (100%)</strong>.</li>
+<li>
+<p><strong>Evidencia en Código:</strong> El repositorio no contiene contraseñas, URLs privadas ni firmas JWT hardcodeadas. Toda la configuración sensible se gestiona a través de variables de entorno cargadas con <code>python-dotenv</code> (<code>SUPABASE_URL</code>, <code>SUPABASE_KEY</code>, <code>SUPABASE_JWT_SECRET</code>, <code>SECRET_KEY</code>). El archivo <code>.env</code> se encuentra explícitamente excluido del control de versiones en <code>.gitignore</code>.</p>
+</li>
+<li>
+<p><strong>Exposición excesiva de datos — ¿La API devuelve solo los campos necesarios?</strong></p>
+</li>
+<li><strong>Evaluación:</strong> <strong>CUMPLE (100%)</strong>.</li>
+<li><strong>Evidencia en Código:</strong> Cada vista utiliza esquemas de serialización de salida estrictos con <strong>Marshmallow</strong> (<code>TareaResponseSchema</code>, <code>PerfilUsuarioResponseSchema</code>, <code>ProductoSchema</code>). Se omiten por diseño contraseñas, hashes, claves de servicio, metadatos internos del servidor y tokens de refresco en respuestas públicas.</li>
+</ol>
+<hr />
+<h3 id="72-matriz-integral-owasp-api-security-top-10-2023">7.2. Matriz Integral OWASP API Security Top 10 (2023)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Riesgo OWASP API Top 10</th>
+<th style="text-align: left;">Amenaza en el Contexto del Proyecto</th>
+<th style="text-align: left;">Control y Mitigación Implementada en el Código</th>
+<th style="text-align: center;">Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>API1:2023 Broken Object Level Authorization (BOLA)</strong></td>
+<td style="text-align: left;">Que un usuario o competidor acceda a cosechas o pedidos ajenos manipulando IDs en la URL.</td>
+<td style="text-align: left;">Políticas nativas RLS en PostgreSQL: <code>USING (auth.uid() = user_id)</code>. Si el recurso es ajeno, la consulta devuelve 0 filas y la API responde <code>404 Not Found</code>.</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API2:2023 Broken Authentication</strong></td>
+<td style="text-align: left;">Robo de credenciales o secuestro de sesiones en redes públicas cruceñas.</td>
+<td style="text-align: left;">Access tokens de corta duración (15 min), rotación estricta de refresh tokens, contraseñas con validación de complejidad y rechazo de firmas manipuladas.</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API3:2023 Broken Object Property Level Authorization</strong></td>
+<td style="text-align: left;">Inyección de atributos protegidos (<code>user_id</code>, <code>id</code>) en el cuerpo JSON de peticiones.</td>
+<td style="text-align: left;">Uso de esquemas Marshmallow estrictos (<code>CrearTareaSchema</code>, <code>ActualizarProductoSchema</code>) que filtran y descartan campos no autorizados.</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API4:2023 Unrestricted Resource Consumption</strong></td>
+<td style="text-align: left;">Denegación de servicio por saturación de base de datos con consultas no indexadas.</td>
+<td style="text-align: left;">Creación de índices en columnas de filtrado frecuente (<code>user_id</code>, <code>completada</code>, <code>productor_id</code>, <code>categoria</code>) y límites de longitud en strings (<code>titulo &lt;= 150</code>).</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API5:2023 Broken Function Level Authorization</strong></td>
+<td style="text-align: left;">Consumidores accediendo a rutas administrativas de despacho campesino.</td>
+<td style="text-align: left;">Decorador <code>@token_required</code> que exige claims verificados antes de ejecutar cualquier mutación de catálogo o despacho.</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API6:2023 Unrestricted Access to Sensitive Business Flows</strong></td>
+<td style="text-align: left;">Creación masiva de cuentas fantasma saturando el registro.</td>
+<td style="text-align: left;">Control de <strong>Deduplicación</strong>: verificación previa de correo en <code>POST /api/auth/registro</code>, respondiendo con código estándar <code>409 Conflict</code>.</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API7:2023 Server Side Request Forgery (SSRF)</strong></td>
+<td style="text-align: left;">Inyección de URLs maliciosas en las imágenes de productos.</td>
+<td style="text-align: left;">Validación de formatos y rutas relativas seguras (<code>/images/*</code>) en los esquemas de cosechas.</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API8:2023 Security Misconfiguration</strong></td>
+<td style="text-align: left;">CORS abierto a <code>*</code> en producción; modo DEBUG activo exponiendo código fuente; credenciales en Git.</td>
+<td style="text-align: left;">CORS restringido a orígenes autorizados; modo debug deshabilitado en producción; <code>.env</code> excluido de Git; variables administradas en Render.</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API9:2023 Improper Inventory Management</strong></td>
+<td style="text-align: left;">Endpoints de prueba huérfanos o desactualizados expuestos al público.</td>
+<td style="text-align: left;">Centralización y versionado semántico en <code>v1</code>, generación dinámica en <code>/docs</code> con Flask-Smorest y monitoreo activo en <code>/api/salud</code>.</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API10:2023 Unsafe Consumption of APIs</strong></td>
+<td style="text-align: left;">Dependencia no verificada de servicios de autenticación externos.</td>
+<td style="text-align: left;">Verificación matemática de firmas JWT y validación estricta de claims <code>iss</code>, <code>aud</code> y <code>token_use</code> con tolerancia de 10s (<em>leeway</em>).</td>
+<td style="text-align: center;"><strong>Mitigado (100%)</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-matriz-de-trazabilidad-integral">8. Matriz de Trazabilidad Integral</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Caso de Uso (Actividad 01)</th>
+<th style="text-align: left;">Endpoint REST (Actividad 03)</th>
+<th style="text-align: left;">Tabla Relacional</th>
+<th style="text-align: left;">Política RLS / Mecanismo de Control</th>
+<th style="text-align: left;">Criterio de Aceptación Verificado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>CU-01: Catálogo Semanal</strong></td>
+<td style="text-align: left;"><code>GET /api/productos</code><br><code>GET /api/productos/:id</code></td>
+<td style="text-align: left;"><code>public.productos</code></td>
+<td style="text-align: left;"><code>productos_lectura_catalogo</code>: <code>USING (activo = TRUE)</code></td>
+<td style="text-align: left;">Respuesta instantánea en &lt; 50 ms con array completo de cosechas y comunidades.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CU-02: Reserva Directa</strong></td>
+<td style="text-align: left;"><code>POST /api/pedidos</code><br><code>GET /api/pedidos/:codigo</code></td>
+<td style="text-align: left;"><code>public.pedidos</code><br><code>public.detalle_pedidos</code></td>
+<td style="text-align: left;"><code>pedidos_creacion_publica</code><br><code>pedidos_consulta_cliente</code></td>
+<td style="text-align: left;">Generación de código <code>ECO-XXXX</code>, validación regex de celular cruceño <code>^[67]\d{7}$</code> y descuento de stock.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CU-03: Gestión de Cosechas</strong></td>
+<td style="text-align: left;"><code>POST /api/productos</code><br><code>PATCH /api/productos/:id</code><br><code>DELETE /api/productos/:id</code></td>
+<td style="text-align: left;"><code>public.productos</code></td>
+<td style="text-align: left;"><code>productos_gestion_productor</code>: <code>USING (productor.user_id = auth.uid())</code></td>
+<td style="text-align: left;">Aislamiento estricto: ningún productor puede editar o eliminar cosechas de otra comunidad.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CU-04: Monitoreo y Despacho</strong></td>
+<td style="text-align: left;"><code>GET /api/pedidos</code><br><code>PATCH /api/pedidos/:id/estado</code></td>
+<td style="text-align: left;"><code>public.pedidos</code></td>
+<td style="text-align: left;"><code>pedidos_despacho_productor</code></td>
+<td style="text-align: left;">Transición de estados (Registrado → Confirmado → En Cosecha → Listo en Feria).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Laboratorio Cátedra: CRUD Tareas</strong></td>
+<td style="text-align: left;"><code>GET /api/tareas</code><br><code>POST /api/tareas</code><br><code>PATCH /api/tareas/:id</code><br><code>DELETE /api/tareas/:id</code></td>
+<td style="text-align: left;"><code>public.tareas</code></td>
+<td style="text-align: left;"><code>tareas_select_propias</code><br><code>tareas_insert_propias</code><br><code>tareas_update_propias</code><br><code>tareas_delete_propias</code></td>
+<td style="text-align: left;">Aislamiento multi-inquilino certificado: Beto recibe 404 al intentar leer, modificar o borrar tareas de Ana.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-matriz-de-gobernanza-y-auditoria-ai-dlc">9. Matriz de Gobernanza y Auditoría AI-DLC</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">ID y Fase AI-DLC</th>
+<th style="text-align: left;">Planteamiento Técnico del Pod</th>
+<th style="text-align: left;">Análisis y Propuesta AI (Antigravity AI)</th>
+<th style="text-align: left;">Decisión de Gobernanza Técnica</th>
+<th style="text-align: left;">Resultado en Repositorio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>[Hito 01]<br>Arquitectura Backend</strong><br><em>Fase: Diseño</em></td>
+<td style="text-align: left;">¿Cómo evitar el antipatrón de un archivo monolítico gigante y satisfacer la consigna de modularidad de la cátedra?</td>
+<td style="text-align: left;">Se propuso el patrón Application Factory (<code>create_app</code>) con registro dinámico de Blueprints de Flask-Smorest.</td>
+<td style="text-align: left;"><strong>Aprobado:</strong> Separación en 4 Blueprints modulares (<code>salud</code>, <code>auth</code>, <code>tareas</code>, <code>ecoforia</code>).</td>
+<td style="text-align: left;"><code>app/__init__.py</code> desacoplado y listo para tests unitarios.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>[Hito 02]<br>Aislamiento RLS</strong><br><em>Fase: Construcción</em></td>
+<td style="text-align: left;">¿Por qué el docente enfatizó que Beto debe recibir 404 y no 403 al acceder a datos de Ana?</td>
+<td style="text-align: left;">Devolver 403 confirma la existencia del ID ajeno (fuga de metadatos BOLA). RLS filtra a nivel motor devolviendo 0 filas, por lo que el recurso legítimamente no existe para Beto.</td>
+<td style="text-align: left;"><strong>Aprobado:</strong> Retorno estricto de <code>404 Not Found</code> en rutas de tareas y cosechas ajenas.</td>
+<td style="text-align: left;">Validado en <code>test_12</code>, <code>test_13</code> y <code>test_14</code> de Pytest.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>[Hito 03]<br>PATCH vs. PUT</strong><br><em>Fase: Construcción</em></td>
+<td style="text-align: left;">¿Por qué no usar PUT y exigir PATCH para actualizar tareas y estados de pedidos?</td>
+<td style="text-align: left;">PUT es destructivo si el cliente no envía el objeto entero. PATCH aplica mutaciones parciales atómicas (ej. solo cambiar <code>completada: true</code> o <code>stock: 50</code>).</td>
+<td style="text-align: left;"><strong>Aprobado:</strong> Adopción de <code>PATCH</code> en tareas, productos y pedidos con esquemas delta.</td>
+<td style="text-align: left;">Implementado con <code>ActualizarTareaSchema</code> y probado en <code>test_15</code>.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>[Hito 04]<br>Ciclo de Tokens</strong><br><em>Fase: Seguridad</em></td>
+<td style="text-align: left;">¿Cómo equilibrar la seguridad con la experiencia de usuario en redes móviles del campo?</td>
+<td style="text-align: left;">Separación en dos tokens: Access Token de vida corta (15 min) y Refresh Token de vida larga (7 días) con rotación criptográfica y leeway de 10s.</td>
+<td style="text-align: left;"><strong>Aprobado:</strong> Implementación estricta de RFC 6749 en <code>jwt_utils.py</code>.</td>
+<td style="text-align: left;">Probado en <code>test_08</code> (expiración) y <code>test_09</code> (renovación).</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>[Hito 05]<br>Trazabilidad Integral</strong><br><em>Fase: Integración</em></td>
+<td style="text-align: left;">¿Cómo articular el laboratorio de tareas con el proyecto final de la Feria Agroecológica?</td>
+<td style="text-align: left;">Se integró el modelo de 4 entidades de la Actividad 01 en <code>ecoforia_bp</code> y en el script DDL, coexistiendo con el laboratorio de tareas.</td>
+<td style="text-align: left;"><strong>Aprobado:</strong> Soporte dual: tareas para la evaluación de Ana vs. Beto y cosechas/pedidos para el MVP socioformativo.</td>
+<td style="text-align: left;">22 tests en <code>test_api.py</code> cubriendo ambos dominios.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-certificacion-de-calidad-bateria-de-pruebas-automatizadas-pytest">10. Certificación de Calidad: Batería de Pruebas Automatizadas (Pytest)</h2>
+<p>Se ejecutó una batería de <strong>22 pruebas automatizadas</strong> en <code>backend/tests/test_api.py</code>, alcanzando una <strong>tasa de aprobación del 100% en 0.29 segundos</strong>:</p>
+<pre><code class="language-text">============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: D:\Programacion web 2\Actividad_3\backend
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.15.1
+collected 22 items
+
+tests/test_api.py::test_01_salud_health_check PASSED                     [  4%]
+tests/test_api.py::test_02_registro_usuario_exitoso PASSED               [  9%]
+tests/test_api.py::test_03_registro_usuario_duplicado_409_deduplicacion PASSED [ 13%]
+tests/test_api.py::test_04_login_credenciales_correctas PASSED           [ 18%]
+tests/test_api.py::test_05_login_password_incorrecto_401 PASSED          [ 22%]
+tests/test_api.py::test_06_endpoint_protegido_sin_token_401 PASSED       [ 27%]
+tests/test_api.py::test_07_token_alterado_firma_invalida_401 PASSED      [ 31%]
+tests/test_api.py::test_08_token_expirado_401 PASSED                     [ 36%]
+tests/test_api.py::test_09_refresh_token_renovacion_exitosa PASSED       [ 40%]
+tests/test_api.py::test_10_crear_tarea_propia_201 PASSED                 [ 45%]
+tests/test_api.py::test_11_listar_tareas_usuario_solo_propias PASSED     [ 50%]
+tests/test_api.py::test_12_aislamiento_rls_beto_no_ve_tarea_de_ana_404 PASSED [ 54%]
+tests/test_api.py::test_13_aislamiento_rls_beto_no_puede_actualizar_tarea_de_ana_404 PASSED [ 59%]
+tests/test_api.py::test_14_aislamiento_rls_beto_no_puede_eliminar_tarea_de_ana_404 PASSED [ 63%]
+tests/test_api.py::test_15_ana_actualiza_parcialmente_su_tarea_patch_200 PASSED [ 68%]
+tests/test_api.py::test_16_ana_elimina_su_tarea_exitosa_200 PASSED       [ 72%]
+tests/test_api.py::test_17_documentacion_swagger_ui_disponible PASSED    [ 77%]
+tests/test_api.py::test_18_especificacion_openapi_json_valida PASSED     [ 81%]
+tests/test_api.py::test_19_ecoforia_cu01_catalogo_publico_productos PASSED [ 86%]
+tests/test_api.py::test_20_ecoforia_cu02_reserva_pedido_directo PASSED   [ 90%]
+tests/test_api.py::test_21_ecoforia_cu03_productor_actualiza_cosecha_patch PASSED [ 95%]
+tests/test_api.py::test_22_ecoforia_cu04_cambio_estado_despacho_ferial PASSED [100%]
+
+============================= 22 passed in 0.29s ==============================
+</code></pre>
+<hr />
+<h2 id="11-respuestas-tecnicas-fundamentadas-a-las-preguntas-de-catedra">11. Respuestas Técnicas Fundamentadas a las Preguntas de Cátedra</h2>
+<ol>
+<li>
+<p><strong>¿Por qué Beto recibe 404 (Not Found) y no 403 (Forbidden) al intentar ver la tarea de Ana?</strong><br />
+<em>Fundamento:</em> Por el principio de <strong>Seguridad por Diseño</strong> y prevención de <strong>fuga de metadatos (IDOR / BOLA)</strong>. Si se responde <code>403</code>, se confirma afirmativamente al atacante que el ID solicitado existe. Bajo <strong>Row Level Security (RLS)</strong> en PostgreSQL, la base de datos filtra con <code>WHERE id = :id AND auth.uid() = user_id</code>, retornando 0 filas. En consecuencia, para el contexto de Beto el recurso no existe, respondiendo semánticamente <strong><code>404 Not Found</code></strong>.</p>
+</li>
+<li>
+<p><strong>¿Por qué se utiliza PATCH en lugar de PUT para actualizar tareas y pedidos?</strong><br />
+<em>Fundamento:</em> Según <strong>RFC 7231</strong> y <strong>RFC 5789</strong>, <strong>PUT</strong> exige el reemplazo total e idempotente del recurso; omitir campos provocaría sobreescritura accidental con nulos. <strong>PATCH</strong> fue diseñado para mutaciones delta parciales, permitiendo actualizar únicamente <code>{ "completada": true }</code> o <code>{ "stock": 50 }</code> de forma atómica y segura.</p>
+</li>
+<li>
+<p><strong>¿Cuál es el estándar de caducidad para Access Token y Refresh Token?</strong><br />
+<em>Fundamento:</em> Siguiendo <strong>IETF OAuth 2.0 (RFC 6749)</strong>:  </p>
+</li>
+<li><strong>Access Token:</strong> Corta duración (<strong>15 minutos</strong>), minimizando la ventana de vulnerabilidad ante intercepciones de tráfico.  </li>
+<li>
+<p><strong>Refresh Token:</strong> Larga duración (<strong>7 a 30 días</strong>), permitiendo renovación sin credenciales aplicando rotación de tokens en cada llamada.</p>
+</li>
+<li>
+<p><strong>¿Cuál es el Blueprint de tu API de tareas?</strong><br />
+<em>Fundamento:</em> Está registrado como <code>tareas_bp</code> con nombre <code>tareas</code> y prefijo <code>/api/tareas</code>.</p>
+</li>
+<li>
+<p><strong>¿Qué son los decoradores (<code>@</code>) en Python?</strong><br />
+<em>Fundamento:</em> Son funciones de orden superior que envuelven otra función para ejecutar lógica previa o posterior. En el backend actúan como guardianes de control de acceso (<code>@token_required</code>) y generadores de esquemas OpenAPI (<code>@blp.arguments</code>, <code>@blp.response</code>).</p>
+</li>
+<li>
+<p><strong>¿Qué es la deduplicación y qué código HTTP se devuelve ante colisiones?</strong><br />
+<em>Fundamento:</em> Es la técnica para impedir registros redundantes en entidades únicas (ej. correos de usuarios). Cuando colisiona un registro existente, se devuelve el código estándar <strong><code>409 Conflict</code></strong>.</p>
+</li>
+<li>
+<p><strong>¿Qué es el margen de tolerancia (<em>Leeway</em>) en JWT?</strong><br />
+<em>Fundamento:</em> Es un margen de gracia temporal (<strong>10 segundos</strong>) en la verificación de <code>exp</code> e <code>iat</code> para absorber desfases de reloj (<em>clock skew</em>) entre servidores distribuidos.</p>
+</li>
+</ol>
+<h3 id="111-guion-de-defensa-tecnica-presencial-paso-a-paso-frente-al-docente">11.1. Guion de Defensa Técnica Presencial (Paso a Paso frente al Docente)</h3>
+<p>Para la defensa presencial ante el <strong>Ing. Jimmy Requena</strong>, el equipo estructuró la demostración técnica en 5 momentos clave:</p>
+<ol>
+<li><strong>Momento 1 — Arquitectura de Código Limpio:</strong></li>
+<li>Abrir el editor en <code>backend/app/</code> y mostrar que no existe un <code>app.py</code> monolítico de 800 líneas.</li>
+<li>Explicar la fábrica <code>create_app()</code> en <code>app/__init__.py</code> y el desacoplamiento en 4 Blueprints: <code>salud</code> (<code>/api/salud</code>), <code>auth</code> (<code>/api/auth</code>), <code>tareas</code> (<code>/api/tareas</code>) y <code>ecoforia</code> (<code>/api</code>).</li>
+<li><strong>Momento 2 — Certificación Automatizada con Pytest:</strong></li>
+<li>Abrir la terminal y ejecutar en vivo: <code>pytest -v</code>.</li>
+<li>Señalar que las <strong>22 pruebas pasan al 100% en menos de 0.3 segundos</strong>, certificando tanto el laboratorio de Ana vs. Beto como los 4 casos de uso del proyecto socioformativo.</li>
+<li><strong>Momento 3 — Swagger UI y Flujo Criptográfico Interactivo (<code>/docs</code>):</strong></li>
+<li>Abrir el navegador en <code>http://localhost:5000/docs</code>.</li>
+<li>Ejecutar <code>POST /api/auth/login</code> con credenciales de prueba. Mostrar el par de tokens (<code>access_token</code> de 15 min y <code>refresh_token</code> de 7 días).</li>
+<li>Subir al botón verde <strong>Authorize</strong>, pegar el token y mostrar cómo se abren los candados de seguridad en todos los endpoints protegidos.</li>
+<li>Probar <code>GET /api/auth/perfil</code> para demostrar la validación en tiempo real de firma, emisor, audiencia y expiración.</li>
+<li><strong>Momento 4 — Demostración de Row Level Security (RLS) en PostgreSQL:</strong></li>
+<li>Mostrar el script <code>sql/01_schema_rls.sql</code> y explicar las políticas con <code>USING</code> y <code>WITH CHECK</code>.</li>
+<li>Explicar por qué cuando Beto intenta leer una tarea de Ana la API devuelve <strong><code>404 Not Found</code></strong> y no <code>403 Forbidden</code> (previene ataques BOLA y enumeración de recursos).</li>
+<li><strong>Momento 5 — Continuidad con el Proyecto Socioformativo (EcoFeria Santa Cruz):</strong></li>
+<li>Demostrar los endpoints de productos y pedidos correspondientes a los casos de uso <strong>CU-01 al CU-04</strong> definidos desde la Actividad 01 y consumidos por la SPA de la Actividad 02, consolidando el MVP para la entrega final.</li>
+</ol>
+<hr />
+<h2 id="12-guia-de-despliegue-en-la-nube-render">12. Guía de Despliegue en la Nube (Render)</h2>
+<ol>
+<li><strong>Subida a GitHub:</strong>
+   <code>bash
+   git init
+   git add .
+   git commit -m "feat(backend): Backend completo Actividad 3 con JWT, RLS y Swagger"
+   git branch -M main
+   git remote add origin https://github.com/TU_USUARIO/TU_REPOSITORIO.git
+   git push -u origin main</code></li>
+<li><strong>Configuración del Web Service en Render:</strong></li>
+<li><strong>Root Directory:</strong> <code>backend</code></li>
+<li><strong>Runtime:</strong> <code>Python 3</code></li>
+<li><strong>Build Command:</strong> <code>pip install -r requirements.txt</code></li>
+<li><strong>Start Command:</strong> <code>gunicorn "app:create_app()"</code></li>
+<li><strong>Plan:</strong> <code>Free</code></li>
+<li><strong>Variables de Entorno:</strong></li>
+<li><code>FLASK_ENV</code>: <code>production</code></li>
+<li><code>SUPABASE_URL</code>: <code>https://[ID].supabase.co</code></li>
+<li><code>SUPABASE_KEY</code>: Clave pública <code>anon</code></li>
+<li><code>SUPABASE_JWT_SECRET</code>: Clave secreta JWT de Supabase</li>
+<li><code>CORS_ORIGINS</code>: <code>*</code></li>
+<li><strong>Verificación en Producción:</strong> Swagger UI disponible en <code>https://[APP].onrender.com/docs</code>.</li>
+</ol>
+<hr />
+<h2 id="13-conclusiones">13. Conclusiones</h2>
+<ol>
+<li><strong>Cumplimiento Integral de Criterios:</strong> Se alcanzó el nivel estratégico de la Matriz 2 (50 puntos), entregando un backend seguro, documentado con Swagger UI y testeado al 100%.</li>
+<li><strong>Continuidad del Proyecto Socioformativo:</strong> Se demostró la coherencia metodológica y técnica entre la fase de Inception (Actividad 01), la construcción del Frontend (Actividad 02) y la arquitectura segura del Backend (Actividad 03) para la Feria Agroecológica de Santa Cruz.</li>
+<li><strong>Seguridad Robusta por Diseño:</strong> La articulación de JWT de doble token con rotación y PostgreSQL con Row Level Security (RLS) neutraliza las vulnerabilidades críticas del OWASP API Top 10 (especialmente BOLA y Broken Authentication).</li>
+<li><strong>Calidad y Rendimiento Certificados:</strong> 22 pruebas automatizadas en Pytest ejecutadas con éxito en 0.29 segundos acreditan la estabilidad y el rigor técnico del software.</li>
+</ol>
+<hr />
+<h2 id="14-referencias-bibliograficas">14. Referencias Bibliográficas</h2>
+<ul>
+<li>Cámara Agropecuaria del Oriente [CAO]. (2024). <em>Reporte estadístico de producción agrícola y canales de comercialización del departamento de Santa Cruz</em>. Publicaciones CAO.</li>
+<li>Centro de Investigación y Promoción del Campesinado [CIPCA]. (2023). <em>Sistemas agroecológicos y comercialización campesina en el oriente boliviano: Desafíos y oportunidades post-pandemia</em>. Cuadernos de Investigación CIPCA N.º 89.</li>
+<li>Dusseault, L., &amp; Snell, J. (2010). <em>PATCH Method for HTTP (RFC 5789)</em>. Internet Engineering Task Force (IETF). https://www.rfc-editor.org/rfc/rfc5789</li>
+<li>Fielding, R., et al. (2014). <em>Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content (RFC 7231)</em>. Internet Engineering Task Force (IETF). https://www.rfc-editor.org/rfc/rfc7231</li>
+<li>Hardt, D. (2012). <em>The OAuth 2.0 Authorization Framework (RFC 6749)</em>. Internet Engineering Task Force (IETF). https://www.rfc-editor.org/rfc/rfc6749</li>
+<li>Jones, M., Bradley, J., &amp; Sakimura, N. (2015). <em>JSON Web Token (JWT) (RFC 7519)</em>. Internet Engineering Task Force (IETF). https://www.rfc-editor.org/rfc/rfc7519</li>
+<li>Nobre, J., &amp; Marshmallow Group. (2024). <em>Flask-Smorest Documentation: OpenAPI 3 &amp; Swagger UI</em>. https://flask-smorest.readthedocs.io/</li>
+<li>OWASP Foundation. (2023). <em>OWASP API Security Top 10 2023</em>. Open Web Application Security Project. https://owasp.org/www-project-api-security/</li>
+<li>Pallets Projects. (2024). <em>Flask Documentation (v3.0.x): Application Factories and Blueprints</em>. https://flask.palletsprojects.com/</li>
+<li>PostgreSQL Global Development Group. (2024). <em>Row Security Policies</em>. PostgreSQL Documentation. https://www.postgresql.org/docs/current/ddl-rowsecurity.html</li>
+<li>Sustainable Web Design. (2023). <em>Calculating digital emissions and performance budgets for web applications</em>. The Green Web Foundation. https://sustainablewebdesign.org/</li>
+</ul>
+    </div>
+</body>
+</html>

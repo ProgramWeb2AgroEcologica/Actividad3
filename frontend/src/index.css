@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #15803d; /* Forest green 700, high contrast */
+    --primary-hover: #166534;
+    --primary-light: #dcfce7;
+    --bg-main: #f8fafc;
+    --text-main: #0f172a;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom driver.js styling to match EcoFeria theme */
+.driver-popover.driverjs-theme {
+  background-color: #ffffff;
+  color: #0f172a;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+  font-family: inherit;
+}
+
+.driver-popover.driverjs-theme .driver-popover-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #15803d;
+}
+
+.driver-popover.driverjs-theme .driver-popover-description {
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.4;
+}
+
+.driver-popover.driverjs-theme button {
+  background-color: #16a34a;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  padding: 6px 14px;
+}
+
+.driver-popover.driverjs-theme button:hover {
+  background-color: #15803d;
+}
