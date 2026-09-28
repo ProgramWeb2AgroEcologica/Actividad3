@@ -99,11 +99,41 @@ def iniciar_sesion(datos):
     password = datos["password"]
 
     usuario = _usuarios_db.get(email)
+    
+    # Si el servidor se reinició, verificar credenciales contra Supabase Auth
     if not usuario or usuario["password"] != password:
-        return jsonify({
-            "mensaje": "Credenciales inválidas. Verifique su correo o contraseña.",
-            "error": "Unauthorized"
-        }), 401
+        supabase_autenticado = False
+        try:
+            from flask import current_app
+            supabase_url = current_app.config.get("SUPABASE_URL")
+            supabase_key = current_app.config.get("SUPABASE_KEY")
+            is_testing = current_app.config.get("TESTING", False)
+
+            if not is_testing and supabase_url and supabase_key and "supabase.co" in supabase_url:
+                from supabase import create_client
+                client = create_client(supabase_url, supabase_key)
+                auth_res = client.auth.sign_in_with_password({"email": email, "password": password})
+                if auth_res.user:
+                    user_id = str(auth_res.user.id)
+                    nombre = auth_res.user.user_metadata.get("nombre", "Usuario") if auth_res.user.user_metadata else "Usuario"
+                    _usuarios_db[email] = {
+                        "id": user_id,
+                        "email": email,
+                        "password": password,
+                        "nombre": nombre,
+                        "rol": "authenticated"
+                    }
+                    usuario = _usuarios_db[email]
+                    supabase_autenticado = True
+        except Exception as e:
+            from flask import current_app
+            current_app.logger.warning(f"Aviso autenticación Supabase: {e}")
+
+        if not supabase_autenticado:
+            return jsonify({
+                "mensaje": "Credenciales inválidas. Verifique su correo o contraseña.",
+                "error": "Unauthorized"
+            }), 401
 
     tokens = generar_tokens(
         user_id=usuario["id"],
