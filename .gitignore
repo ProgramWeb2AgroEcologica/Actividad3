@@ -19,3 +19,10 @@ __pycache__/
 # Build outputs
 dist/
 build/
+
+# Informes y scripts auxiliares (no subir a GitHub)
+INFORME_ACTIVIDAD_03.docx
+INFORME_ACTIVIDAD_03.pdf
+generate_docx_report.py
+generate_report.py
+generate_html_report.py

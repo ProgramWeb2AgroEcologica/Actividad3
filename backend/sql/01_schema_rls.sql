@@ -3,14 +3,6 @@
 -- Docente: Ing. Jimmy Requena (Bolivianotech)
 -- Estudiantes: Eduar Heredia, Limbert David Quispe Osco
 -- ==============================================================================
--- Archivo: 01_schema_rls.sql
--- Descripción:
---   1. Esquema de Laboratorio (Tabla 'tareas'): Aislamiento RLS para pruebas unitarias
---      y evaluación de cátedra (Ana vs. Beto).
---   2. Esquema Integral del Proyecto Socioformativo (Feria Agroecológica Santa Cruz):
---      Tablas 'productores', 'productos', 'pedidos' y 'detalle_pedidos', con RLS multi-tenant
---      donde cada agricultor gestiona exclusivamente sus cosechas.
--- ==============================================================================
 
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
