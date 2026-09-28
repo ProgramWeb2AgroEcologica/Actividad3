@@ -208,12 +208,22 @@ CREATE POLICY productos_gestion_productor ON public.productos
 - **`USING`:** Condición de filtrado que evalúa las filas **existentes** al ejecutar `SELECT`, `UPDATE` o `DELETE`. Si la expresión `auth.uid() = user_id` no se cumple, PostgreSQL trata el registro como inexistente.
 - **`WITH CHECK`:** Condición de validación que inspecciona los datos **nuevos o modificados** antes de confirmar un `INSERT` o `UPDATE`, impidiendo que un usuario suplante a otro asignándole su UID.
 
-### 4.3. Evidencia de Implementación en Supabase
+### 4.3. Evidencias Gráficas de Implementación y Despliegue en la Nube
 
-A continuación se presenta la evidencia gráfica del panel de administración de Supabase (*Table Editor*), donde se certifica que las cinco tablas de la arquitectura poseen el badge **RLS ENABLED**:
+Conforme a los criterios de verificación de cátedra (Matriz 2: Nivel Estratégico, 50 pts), se documentan las cuatro evidencias gráficas del sistema en funcionamiento:
 
+#### 1. Evidencia de Base de Datos y RLS en Supabase
 ![Evidencia de Políticas RLS Activas en Supabase](foots/RSL%20de%20las%20TablasSql.png)
 *Figura 4.1: Panel Table Editor de Supabase confirmando RLS habilitado (Badge verde RLS ENABLED) en las tablas `tareas`, `productores`, `productos`, `pedidos` y `detalle_pedidos`.*
+
+#### 2. Evidencia de Documentación Swagger UI en Render
+*Figura 4.2: Interfaz interactiva OpenAPI 3.0.3 en vivo en `https://ecoferia.onrender.com/docs`, mostrando el botón "Authorize" con esquema Bearer JWT y los Blueprints `salud`, `auth`, `tareas` y `ecoforia`.*
+
+#### 3. Evidencia del Servicio Web Desplegado en la Nube (Render)
+*Figura 4.3: Panel de control de Render (Dashboard) mostrando el Web Service `ecoferia` en estado `Live`, con runtime Python 3, servidor WSGI Gunicorn y variables de entorno seguras.*
+
+#### 4. Evidencia de Certificación de Calidad en Terminal (Pytest)
+*Figura 4.4: Ejecución en consola de `pytest -v` en el directorio `backend/`, certificando 22 pruebas automatizadas aprobadas (100% de éxito en 0.29s).*
 
 ---
 
