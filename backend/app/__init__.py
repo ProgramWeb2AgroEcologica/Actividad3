@@ -27,6 +27,12 @@ def create_app(config_name=None, test_config=None):
     # Inicializar Flask-Smorest OpenAPI
     api = Api(app)
 
+    # Redirección automática de la raíz a la documentación interactiva Swagger
+    @app.route("/")
+    def index():
+        from flask import redirect
+        return redirect("/docs")
+
     # Manejadores de error globales HTTP
     @app.errorhandler(404)
     def recurso_no_encontrado(e):
