@@ -394,6 +394,12 @@ CREATE POLICY productos_gestion_productor ON public.productos
 <li><strong><code>USING</code>:</strong> Condición de filtrado que evalúa las filas <strong>existentes</strong> al ejecutar <code>SELECT</code>, <code>UPDATE</code> o <code>DELETE</code>. Si la expresión <code>auth.uid() = user_id</code> no se cumple, PostgreSQL trata el registro como inexistente.</li>
 <li><strong><code>WITH CHECK</code>:</strong> Condición de validación que inspecciona los datos <strong>nuevos o modificados</strong> antes de confirmar un <code>INSERT</code> o <code>UPDATE</code>, impidiendo que un usuario suplante a otro asignándole su UID.</li>
 </ul>
+<h3 id="43-evidencia-de-implementacion-en-supabase">4.3. Evidencia de Implementación en Supabase</h3>
+<p>A continuación se presenta la evidencia gráfica del panel de administración de Supabase (<em>Table Editor</em>), donde se certifica que las cinco tablas de la arquitectura poseen el badge <strong>RLS ENABLED</strong>:</p>
+<figure style="text-align: center; margin: 24px 0;">
+    <img src="foots/RSL de las TablasSql.png" alt="Evidencia de Políticas RLS Activas en Supabase" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); border: 1px solid var(--border);">
+    <figcaption style="font-size: 0.88rem; color: var(--text-muted); margin-top: 10px;"><strong>Figura 4.1:</strong> Panel Table Editor de Supabase confirmando RLS habilitado (Badge verde RLS ENABLED) en las tablas <code>tareas</code>, <code>productores</code>, <code>productos</code>, <code>pedidos</code> y <code>detalle_pedidos</code>.</figcaption>
+</figure>
 <hr />
 <h2 id="5-protocolo-criptografico-jwt-y-ciclo-de-vida-de-tokens">5. Protocolo Criptográfico JWT y Ciclo de Vida de Tokens</h2>
 <h3 id="51-anatomia-y-garantia-de-integridad">5.1. Anatomía y Garantía de Integridad</h3>

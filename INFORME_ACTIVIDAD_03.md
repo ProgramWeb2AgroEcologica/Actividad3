@@ -208,6 +208,13 @@ CREATE POLICY productos_gestion_productor ON public.productos
 - **`USING`:** Condición de filtrado que evalúa las filas **existentes** al ejecutar `SELECT`, `UPDATE` o `DELETE`. Si la expresión `auth.uid() = user_id` no se cumple, PostgreSQL trata el registro como inexistente.
 - **`WITH CHECK`:** Condición de validación que inspecciona los datos **nuevos o modificados** antes de confirmar un `INSERT` o `UPDATE`, impidiendo que un usuario suplante a otro asignándole su UID.
 
+### 4.3. Evidencia de Implementación en Supabase
+
+A continuación se presenta la evidencia gráfica del panel de administración de Supabase (*Table Editor*), donde se certifica que las cinco tablas de la arquitectura poseen el badge **RLS ENABLED**:
+
+![Evidencia de Políticas RLS Activas en Supabase](foots/RSL%20de%20las%20TablasSql.png)
+*Figura 4.1: Panel Table Editor de Supabase confirmando RLS habilitado (Badge verde RLS ENABLED) en las tablas `tareas`, `productores`, `productos`, `pedidos` y `detalle_pedidos`.*
+
 ---
 
 ## 5. Protocolo Criptográfico JWT y Ciclo de Vida de Tokens
